@@ -19,8 +19,7 @@ const serverlessConfiguration: AWS = {
       },
     },
   },
-  plugins: ['serverless-esbuild', 'serverless-plugin-resource-tagging'
-],
+  plugins: ['serverless-esbuild', 'serverless-plugin-resource-tagging'],
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
@@ -35,6 +34,36 @@ const serverlessConfiguration: AWS = {
   },
   // import the function via paths
   functions: { hello },
+  resources: {
+    Resources: {
+
+      "DBSecurityGroup": {
+        "Type": "AWS::RDS::DBSecurityGroup",
+        "Properties": {
+          "DBSecurityGroupIngress": { "EC2SecurityGroupName": { "Ref": "WebServerSecurityGroup" } },
+          "GroupDescription": "Frontend Access"
+        }
+      },
+      caliberMobileDB: {
+        Type: 'AWS::RDS::DBInstance',
+        Properties: {
+          'DBSecurityGroups': [
+            {
+              'Ref': 'MyDbSecurityByEC2SecurityGroup'
+            },
+            {
+              'Ref': 'MyDbSecurityByCIDRIPGroup'
+            }
+          ],
+          AllocatedStorage: '5',
+          DBInstanceClass: 'db.m1.small',
+          Engine: 'PostgreSQL',
+          MasterUsername: 'MyName',
+          MasterUserPassword: 'MyPassword',
+        },
+      },
+    },
+  },
 };
 
 export default serverlessConfiguration;
