@@ -14,7 +14,7 @@ const serverlessConfiguration: AWS = {
       minify: true,
       sourcemap: true,
       external: [
-        'aws-sdk'
+        'aws-sdk',
       ],
       watch: {
         pattern: ['src/**/*'],
@@ -38,51 +38,63 @@ const serverlessConfiguration: AWS = {
     stackTags: {
       'Created By': '1018-MattOberlies-CaliberMobile',
       'Delete After': 'never',
-      'Contact Before Delete': 'matthew',
-      'Purpose': 'Backend for Caliber Mobile',
+      'Contact Before Delete': '1018-MattOberlies-CaliberMobile',
+      Purpose: 'Backend for Caliber Mobile',
     },
-    iam: {
+    // iam: {
 
-    }
+    // },
   },
   // import the function via paths
   functions: { hello },
   resources: {
     Resources: {
+      // InboundRules: {
+      //   Type: 'AWS::RDS::DBSecurityGroup::Ingress',
+      //   Properties: {
+
+      //     IpProtocol: 'tcp',
+      //     FromPort: '5432',
+      //     ToPort: '5432',
+      //     CidrIp: '0.0.0.0/0',
+
+      //   },
+      // },
       WebServerSecurityGroup: {
-        Type: "AWS::EC2::SecurityGroup",
+        Type: 'AWS::EC2::SecurityGroup',
         Properties: {
-          GroupDescription: "Enable HTTP access via port 80, SSH access, and PostgreSQL access",
+          GroupDescription: 'Enable HTTP access via port 80, SSH access, and PostgreSQL access',
           SecurityGroupIngress: [
-            { IpProtocol: "tcp", FromPort: "80", ToPort: "80", CidrIp: "0.0.0.0/0" },
-            { IpProtocol: "tcp", FromPort: "22", ToPort: "22", CidrIp: "0.0.0.0/0" },
-            { IpProtocol: "tcp", FromPort: "5432", ToPort: "5432", CidrIp: "0.0.0.0/0" },
+            {
+              IpProtocol: 'tcp', FromPort: '80', ToPort: '80', CidrIp: '0.0.0.0/0',
+            },
+            {
+              IpProtocol: 'tcp', FromPort: '22', ToPort: '22', CidrIp: '0.0.0.0/0',
+            },
+            {
+              IpProtocol: 'tcp', FromPort: '5432', ToPort: '5432', CidrIp: '0.0.0.0/0',
+            },
           ],
         },
       },
       dbSecurityGroup: {
-        Type: "AWS::RDS::DBSecurityGroup",
+        Type: 'AWS::RDS::DBSecurityGroup',
         Properties: {
           DBSecurityGroupIngress: {
             EC2SecurityGroupName: {
-              Ref: "WebServerSecurityGroup"
-            }
+              Ref: 'WebServerSecurityGroup',
+            },
           },
-          GroupDescription: "why",
-          // SecurityGroupIngress: [
-          //   // { IpProtocol: "tcp", FromPort: "80", ToPort: "80", CidrIp: "0.0.0.0/0" },
-          //   // { IpProtocol: "tcp", FromPort: "22", ToPort: "22", CidrIp: "0.0.0.0/0" },
-          //   { IpProtocol: "tcp", FromPort: "5432", ToPort: "5432", CidrIp: "0.0.0.0/0" },
-          // ],
-        }
+          GroupDescription: 'Inbound rules',
+        },
       },
 
       caliberMobileDB: {
         Type: 'AWS::RDS::DBInstance',
         Properties: {
-          // VPCSecurityGroups: [
-          //   { Ref: 'WebServerSecurityGroup' },
-          // ],
+          VPCSecurityGroups: [
+            { Ref: 'WebServerSecurityGroup' },
+          ],
           DBSecurityGroups: [
             { Ref: 'dbSecurityGroup' },
           ],
