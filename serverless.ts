@@ -50,45 +50,51 @@ const serverlessConfiguration: AWS = {
   resources: {
     Resources: {
       WebServerSecurityGroup: {
-        "Type": "AWS::EC2::SecurityGroup",
-        "Properties": {
-          "GroupDescription": "Enable HTTP access via port 80, SSH access, and PostgreSQL access",
-          "SecurityGroupIngress": [
-            { "IpProtocol": "tcp", "FromPort": "80", "ToPort": "80", "CidrIp": "0.0.0.0/0" },
-            { "IpProtocol": "tcp", "FromPort": "22", "ToPort": "22", "CidrIp": "0.0.0.0/0" },
-            { "IpProtocol": "tcp", "FromPort": "5432", "ToPort": "5432", "CidrIp": "0.0.0.0/0" },
+        Type: "AWS::EC2::SecurityGroup",
+        Properties: {
+          GroupDescription: "Enable HTTP access via port 80, SSH access, and PostgreSQL access",
+          SecurityGroupIngress: [
+            { IpProtocol: "tcp", FromPort: "80", ToPort: "80", CidrIp: "0.0.0.0/0" },
+            { IpProtocol: "tcp", FromPort: "22", ToPort: "22", CidrIp: "0.0.0.0/0" },
+            { IpProtocol: "tcp", FromPort: "5432", ToPort: "5432", CidrIp: "0.0.0.0/0" },
           ],
         },
       },
-      why: {
+      dbSecurityGroup: {
         Type: "AWS::RDS::DBSecurityGroup",
         Properties: {
           DBSecurityGroupIngress: {
-            "EC2SecurityGroupName": {
+            EC2SecurityGroupName: {
               Ref: "WebServerSecurityGroup"
             }
           },
-          "GroupDescription": "Frontend Access"
+          GroupDescription: "why",
+          // SecurityGroupIngress: [
+          //   // { IpProtocol: "tcp", FromPort: "80", ToPort: "80", CidrIp: "0.0.0.0/0" },
+          //   // { IpProtocol: "tcp", FromPort: "22", ToPort: "22", CidrIp: "0.0.0.0/0" },
+          //   { IpProtocol: "tcp", FromPort: "5432", ToPort: "5432", CidrIp: "0.0.0.0/0" },
+          // ],
         }
       },
-      
+
       caliberMobileDB: {
         Type: 'AWS::RDS::DBInstance',
         Properties: {
-          
+          // VPCSecurityGroups: [
+          //   { Ref: 'WebServerSecurityGroup' },
+          // ],
           DBSecurityGroups: [
-            {
-              Ref: 'why'
-            },
-            {
-              Ref: 'WebServerSecurityGroup'
-            }
+            { Ref: 'dbSecurityGroup' },
           ],
           AllocatedStorage: '20',
           DBInstanceClass: 'db.t2.micro',
           Engine: 'postgres',
           MasterUsername: 'postgres',
           MasterUserPassword: 'password',
+          // delete in prod
+          BackupRetentionPeriod: 0,
+          DeleteAutomatedBackups: true,
+
         },
       },
     },

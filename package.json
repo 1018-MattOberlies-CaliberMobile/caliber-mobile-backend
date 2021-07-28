@@ -10,7 +10,6 @@
     "node": ">=14.15.0"
   },
   "dependencies": {
-    "-": "0.0.1",
     "@middy/core": "^1.5.2",
     "@middy/http-json-body-parser": "^1.5.2",
     "pg": "^8.7.1",
