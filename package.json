@@ -4,13 +4,15 @@
   "description": "Serverless aws-nodejs-typescript template",
   "main": "serverless.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:create": "ts-node rds-set-up/create.ts",
+    "db:drop": "ts-node rds-set-up/drop.ts",
+    "db:reset": "npm run db:drop && npm run db:create"
   },
   "engines": {
     "node": ">=14.15.0"
   },
   "dependencies": {
-    "-": "0.0.1",
     "@middy/core": "^1.5.2",
     "@middy/http-json-body-parser": "^1.5.2",
     "pg": "^8.7.1",
@@ -20,15 +22,19 @@
     "@serverless/typescript": "^2.52.1",
     "@types/aws-lambda": "^8.10.71",
     "@types/node": "^14.17.6",
+    "@types/pg": "^8.6.1",
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",
+    "dotenv": "^10.0.0",
     "esbuild": "^0.12.16",
     "eslint": "^7.31.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.23.4",
+    "fs": "0.0.1-security",
     "json-schema-to-ts": "^1.5.0",
     "serverless": "^2.23.0",
     "serverless-esbuild": "^1.16.1",
+    "serverless-plugin-resource-tagging": "^1.1.1",
     "serverless-webpack": "^5.3.5",
     "ts-loader": "^8.0.15",
     "ts-node": "^9.1.1",
