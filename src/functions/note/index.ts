@@ -1,11 +1,11 @@
 import { handlerPath } from '@libs/handlerResolver';
-import schema from './schema';
+import createNoteSchema from './schemas/createNoteSchema';
+import updateNoteSchema from './schemas/updateNoteSchema';
 
-type Function = 'createNoteHandler' | 'getAllNotes' | 'getNote' | 'updateNote' | 'deleteNote' | 'getNotesByBatchId' | 'getNotesByWeek' | 'getNotesOverall' | 'getNotesByAssociate';
+type FunctionHandler = 'createNoteHandler' | 'getAllNotesHandler' | 'getNoteByIdHandler' | 'updateNoteHandler' | 'deleteNoteHandler' | 'getNotesByBatchIdHandler' | 'getNotesByBatchIdAndByWeekHandler' | 'getNotesByBatchIdAndWeekOverallHandler' | 'getNotesByAssociateIdHandler';
 
-const hanlderPath = (fun: Function) => `${handlerPath(__dirname)}/${fun}.main`;
-
-const root = 'note';
+const note = 'note';
+const hanlderPath = (fun: FunctionHandler) => `${handlerPath(__dirname)}/handlers/${fun}.main`;
 
 export const createNote = {
   handler: hanlderPath('createNoteHandler'),
@@ -13,11 +13,11 @@ export const createNote = {
     {
       http: {
         method: 'post',
-        path: root,
+        path: note,
         cors: true,
         request: {
           schema: {
-            'application/json': schema,
+            'application/json': createNoteSchema,
           },
         },
       },
@@ -26,35 +26,31 @@ export const createNote = {
 };
 
 export const getAllNotes = {
-  handler: hanlderPath('getAllNotes'),
+  handler: hanlderPath('getAllNotesHandler'),
   events: [
     {
       http: {
         method: 'get',
-        path: root,
+        path: note,
         cors: true,
         request: {
-          schema: {
-            'application/json': schema,
-          },
+          schema: null,
         },
       },
     },
   ],
 };
 
-export const getNote = {
-  handler: hanlderPath('getNote'),
+export const getNoteById = {
+  handler: hanlderPath('getNoteByIdHandler'),
   events: [
     {
       http: {
         method: 'get',
-        path: `${root}/{id}`,
+        path: `${note}/{noteId}`,
         cors: true,
         request: {
-          schema: {
-            'application/json': schema,
-          },
+          schema: null,
         },
       },
     },
@@ -62,16 +58,16 @@ export const getNote = {
 };
 
 export const updateNote = {
-  handler: hanlderPath('updateNote'),
+  handler: hanlderPath('updateNoteHandler'),
   events: [
     {
       http: {
         method: 'put',
-        path: `${root}`,
+        path: note,
         cors: true,
         request: {
           schema: {
-            'application/json': schema,
+            'application/json': updateNoteSchema,
           },
         },
       },
@@ -80,71 +76,31 @@ export const updateNote = {
 };
 
 export const deleteNote = {
-  handler: hanlderPath('deleteNote'),
+  handler: hanlderPath('deleteNoteHandler'),
   events: [
     {
       http: {
         method: 'delete',
-        path: 'hello',
+        path: `${note}/{noteId}`,
         cors: true,
         request: {
-          schema: {
-            'application/json': schema,
-          },
+          schema: null,
         },
       },
     },
   ],
 };
 
-export const getNotesByWeek = {
-  handler: hanlderPath('getNotesByWeek'),
+export const getNotesByBatchIdAndByWeek = {
+  handler: hanlderPath('getNotesByBatchIdAndByWeekHandler'),
   events: [
     {
       http: {
         method: 'get',
-        path: 'hello',
+        path: `${note}/batch/{batchId}/{week}`,
         cors: true,
         request: {
-          schema: {
-            'application/json': schema,
-          },
-        },
-      },
-    },
-  ],
-};
-
-export const getNotesOverall = {
-  handler: hanlderPath('getNotesOverall'),
-  events: [
-    {
-      http: {
-        method: 'get',
-        path: 'hello',
-        cors: true,
-        request: {
-          schema: {
-            'application/json': schema,
-          },
-        },
-      },
-    },
-  ],
-};
-
-export const getNotesByAssociate = {
-  handler: hanlderPath('getNotesByAssociate'),
-  events: [
-    {
-      http: {
-        method: 'get',
-        path: 'hello',
-        cors: true,
-        request: {
-          schema: {
-            'application/json': schema,
-          },
+          schema: null,
         },
       },
     },
@@ -152,17 +108,47 @@ export const getNotesByAssociate = {
 };
 
 export const getNotesByBatchId = {
-  handler: hanlderPath('getNotesByBatchId'),
+  handler: hanlderPath('getNotesByBatchIdHandler'),
   events: [
     {
       http: {
         method: 'get',
-        path: 'hello',
+        path: `${note}/batch/{batchId}`,
         cors: true,
         request: {
-          schema: {
-            'application/json': schema,
-          },
+          schema: null,
+        },
+      },
+    },
+  ],
+};
+
+export const getNotesByBatchIdAndWeekOverall = {
+  handler: hanlderPath('getNotesByBatchIdAndWeekOverallHandler'),
+  events: [
+    {
+      http: {
+        method: 'get',
+        path: `${note}/batch/{batchId}/{week}/overall`,
+        cors: true,
+        request: {
+          schema: null,
+        },
+      },
+    },
+  ],
+};
+
+export const getNotesByAssociate = {
+  handler: hanlderPath('getNotesByAssociateIdHandler'),
+  events: [
+    {
+      http: {
+        method: 'get',
+        path: `${note}/associate/{associateId}`,
+        cors: true,
+        request: {
+          schema: null,
         },
       },
     },

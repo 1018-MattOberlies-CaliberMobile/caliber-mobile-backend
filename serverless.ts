@@ -1,6 +1,47 @@
+/* eslint-disable import/no-extraneous-dependencies */
+import * as dotenv from 'dotenv';
 import type { AWS } from '@serverless/typescript';
 
-import hello from '@functions/hello';
+import {
+  createNote,
+  getAllNotes,
+  getNoteById,
+  updateNote,
+  deleteNote,
+  getNotesByBatchIdAndByWeek,
+  getNotesByBatchId,
+  getNotesByBatchIdAndWeekOverall,
+  getNotesByAssociate,
+} from '@functions/note';
+
+import {
+  createAssociate,
+  deleteAssociateById,
+  getAllAssociate,
+  getAssociateByBatchId,
+  getAssociateById,
+  updateAssociate,
+} from '@functions/associate';
+
+import {
+  getAllBatches,
+  createBatch,
+  updateBatch,
+  getBatchById,
+  deleteBatchById,
+  getBatchByYear,
+} from '@functions/batch';
+
+import {
+  getAllUsers,
+  createUser,
+  updateUser,
+  getUserById,
+} from '@functions/user';
+
+dotenv.config({});
+
+const { DB_USERNAME, DB_PASSWORD } = process.env;
 
 const serverlessConfiguration: AWS = {
   service: 'caliber-mobile-backend',
@@ -41,12 +82,38 @@ const serverlessConfiguration: AWS = {
       'Contact Before Delete': '1018-MattOberlies-CaliberMobile',
       Purpose: 'Backend for Caliber Mobile',
     },
-    // iam: {
-
-    // },
   },
-  // import the function via paths
-  functions: { hello },
+
+  functions: {
+    createNote,
+    getAllNotes,
+    getNoteById,
+    updateNote,
+    deleteNote,
+    getNotesByBatchIdAndByWeek,
+    getNotesByBatchId,
+    getNotesByBatchIdAndWeekOverall,
+    getNotesByAssociate,
+
+    createAssociate,
+    getAllAssociate,
+    getAssociateById,
+    deleteAssociateById,
+    updateAssociate,
+    getAssociateByBatchId,
+
+    getAllBatches,
+    createBatch,
+    updateBatch,
+    getBatchById,
+    deleteBatchById,
+    getBatchByYear,
+
+    getAllUsers,
+    createUser,
+    updateUser,
+    getUserById,
+  },
   resources: {
     Resources: {
       dbSecurityGroup: {
@@ -57,7 +124,7 @@ const serverlessConfiguration: AWS = {
           ],
           GroupDescription: 'Inbound rules',
           Tags: [
-            { Key: 'Purpose', Value: 'Specify inbound rules for db remote access' },
+            { Key: 'Purpose', Value: 'Ingress rule for caliber mobile rds database' },
           ],
         },
       },
@@ -71,8 +138,8 @@ const serverlessConfiguration: AWS = {
           AllocatedStorage: '20',
           DBInstanceClass: 'db.t2.micro',
           Engine: 'postgres',
-          MasterUsername: 'postgres',
-          MasterUserPassword: 'password',
+          MasterUsername: DB_USERNAME,
+          MasterUserPassword: DB_PASSWORD,
 
           // delete in prod
           BackupRetentionPeriod: 0,
