@@ -7,8 +7,6 @@ type FunctionHandler = 'createNoteHandler' | 'getAllNotesHandler' | 'getNoteById
 const note = 'api/v1/note';
 const hanlderPath = (fun: FunctionHandler) => `${handlerPath(__dirname)}/handlers/${fun}.main`;
 
-const root = 'note';
-
 export const createNote = {
   handler: hanlderPath('createNoteHandler'),
   events: [
