@@ -1,17 +1,19 @@
 import { handlerPath } from '@libs/handlerResolver';
 import schema from './schema';
 
-type Function = 'createNote' | 'getAllNotes' | 'getNote' | 'updateNote' | 'deleteNote' | 'getNotesByBatchId' | 'getNotesByWeek' | 'getNotesOverall' | 'getNotesByAssociate';
+type Function = 'createNoteHandler' | 'getAllNotes' | 'getNote' | 'updateNote' | 'deleteNote' | 'getNotesByBatchId' | 'getNotesByWeek' | 'getNotesOverall' | 'getNotesByAssociate';
 
 const hanlderPath = (fun: Function) => `${handlerPath(__dirname)}/${fun}.main`;
 
+const root = 'note';
+
 export const createNote = {
-  handler: hanlderPath('createNote'),
+  handler: hanlderPath('createNoteHandler'),
   events: [
     {
       http: {
         method: 'post',
-        path: 'note',
+        path: root,
         cors: true,
         request: {
           schema: {
@@ -29,7 +31,7 @@ export const getAllNotes = {
     {
       http: {
         method: 'get',
-        path: 'note',
+        path: root,
         cors: true,
         request: {
           schema: {
@@ -47,7 +49,7 @@ export const getNote = {
     {
       http: {
         method: 'get',
-        path: 'note',
+        path: `${root}/{id}`,
         cors: true,
         request: {
           schema: {
@@ -65,7 +67,7 @@ export const updateNote = {
     {
       http: {
         method: 'put',
-        path: 'hello',
+        path: `${root}`,
         cors: true,
         request: {
           schema: {

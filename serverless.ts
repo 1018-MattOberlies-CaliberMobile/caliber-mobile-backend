@@ -49,52 +49,22 @@ const serverlessConfiguration: AWS = {
   functions: { hello },
   resources: {
     Resources: {
-      // InboundRules: {
-      //   Type: 'AWS::RDS::DBSecurityGroup::Ingress',
-      //   Properties: {
-
-      //     IpProtocol: 'tcp',
-      //     FromPort: '5432',
-      //     ToPort: '5432',
-      //     CidrIp: '0.0.0.0/0',
-
-      //   },
-      // },
-      WebServerSecurityGroup: {
-        Type: 'AWS::EC2::SecurityGroup',
-        Properties: {
-          GroupDescription: 'Enable HTTP access via port 80, SSH access, and PostgreSQL access',
-          SecurityGroupIngress: [
-            {
-              IpProtocol: 'tcp', FromPort: '80', ToPort: '80', CidrIp: '0.0.0.0/0',
-            },
-            {
-              IpProtocol: 'tcp', FromPort: '22', ToPort: '22', CidrIp: '0.0.0.0/0',
-            },
-            {
-              IpProtocol: 'tcp', FromPort: '5432', ToPort: '5432', CidrIp: '0.0.0.0/0',
-            },
-          ],
-        },
-      },
       dbSecurityGroup: {
         Type: 'AWS::RDS::DBSecurityGroup',
         Properties: {
-          DBSecurityGroupIngress: {
-            EC2SecurityGroupName: {
-              Ref: 'WebServerSecurityGroup',
-            },
-          },
+          DBSecurityGroupIngress: [
+            { CIDRIP: '0.0.0.0/0' },
+          ],
           GroupDescription: 'Inbound rules',
+          Tags: [
+            { Key: 'Purpose', Value: 'Specify inbound rules for db remote access' },
+          ],
         },
       },
 
       caliberMobileDB: {
         Type: 'AWS::RDS::DBInstance',
         Properties: {
-          VPCSecurityGroups: [
-            { Ref: 'WebServerSecurityGroup' },
-          ],
           DBSecurityGroups: [
             { Ref: 'dbSecurityGroup' },
           ],
@@ -103,10 +73,10 @@ const serverlessConfiguration: AWS = {
           Engine: 'postgres',
           MasterUsername: 'postgres',
           MasterUserPassword: 'password',
+
           // delete in prod
           BackupRetentionPeriod: 0,
           DeleteAutomatedBackups: true,
-
         },
       },
     },
