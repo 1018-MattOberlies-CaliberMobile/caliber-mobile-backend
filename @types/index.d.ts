@@ -1,8 +1,11 @@
+export type TechincalScore = 0 | 1 | 2 | 3 | 4;
+export type Role = 'Trainer' | 'QC_Analyst' | 'Admin'
+
 export type Note = {
   noteId: string,
   batch: Batch,
   noteContent: string,
-  technicalScore: '0' | '1' | '2' | '3' | '4',
+  technicalScore: TechincalScore,
   associate?: Associate,
   weekNumber: number,
 };
@@ -18,8 +21,8 @@ export type Batch = {
 };
 
 export type User = {
-  userId: string,
-  role: 'Trainer' | 'QC_Analyst' | 'Admin',
+  username: string,
+  role: Role,
 };
 
 export type Associate = {
