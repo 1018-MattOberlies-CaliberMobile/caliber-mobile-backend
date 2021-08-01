@@ -46,6 +46,6 @@
     "@types/jest": "^26.0.24",
     "jest": "^27.0.6"
   },
-  "author": "The serverless webpack authors (https://github.com/elastic-coders/serverless-webpack)",
+  "author": "1018-MattOberlies-CaliberMobile",
   "license": "MIT"
 }

@@ -41,7 +41,23 @@ import {
 
 dotenv.config({});
 
-const { DB_USERNAME, DB_PASSWORD } = process.env;
+const {
+  DB_NAME,
+  DB_ALLOCATED_STORAGE,
+  DB_INSTANCE_CLASS,
+  DB_ENGINE,
+  DB_USERNAME,
+  DB_PASSWORD,
+} = process.env;
+
+if (!(
+  DB_NAME || DB_ALLOCATED_STORAGE || DB_INSTANCE_CLASS || DB_ENGINE || DB_USERNAME || DB_PASSWORD
+)) {
+  console.error('Please provide all the environment variables in the .env file');
+  process.exit(-1);
+}
+
+console.debug('>>', DB_NAME, DB_ENGINE, DB_ALLOCATED_STORAGE, 'GiB', DB_INSTANCE_CLASS);
 
 const serverlessConfiguration: AWS = {
   service: 'caliber-mobile-backend',
@@ -74,12 +90,16 @@ const serverlessConfiguration: AWS = {
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
+      DATABASE_NAME: DB_NAME,
     },
     lambdaHashingVersion: '20201221',
     stackTags: {
       'Created By': '1018-MattOberlies-CaliberMobile',
       'Resource Purpose': 'Backend for Caliber Mobile',
     },
+    iamManagedPolicies: [
+      'arn:aws:iam::855430746673:role/cloud-native-lambda-execution-role',
+    ],
   },
 
   functions: {
@@ -112,6 +132,7 @@ const serverlessConfiguration: AWS = {
     updateUser,
     getUserById,
   },
+
   resources: {
     Resources: {
       dbSecurityGroup: {
@@ -130,12 +151,13 @@ const serverlessConfiguration: AWS = {
       caliberMobileDB: {
         Type: 'AWS::RDS::DBInstance',
         Properties: {
+          DBName: DB_NAME,
           DBSecurityGroups: [
             { Ref: 'dbSecurityGroup' },
           ],
-          AllocatedStorage: '20',
-          DBInstanceClass: 'db.t2.micro',
-          Engine: 'postgres',
+          AllocatedStorage: DB_ALLOCATED_STORAGE,
+          DBInstanceClass: DB_INSTANCE_CLASS,
+          Engine: DB_ENGINE,
           MasterUsername: DB_USERNAME,
           MasterUserPassword: DB_PASSWORD,
         },
