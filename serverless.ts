@@ -91,6 +91,11 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       DATABASE_NAME: DB_NAME,
+      DATABASE_DIALECT: DB_ENGINE,
+      DATABASE_USERNAME: DB_USERNAME,
+      DATABASE_PASSWORD: DB_PASSWORD,
+      // TODO: get endpoint of database
+      // DATABASE_HOST: DB_HOST,
     },
     lambdaHashingVersion: '20201221',
     stackTags: {
