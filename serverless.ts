@@ -78,9 +78,7 @@ const serverlessConfiguration: AWS = {
     lambdaHashingVersion: '20201221',
     stackTags: {
       'Created By': '1018-MattOberlies-CaliberMobile',
-      'Delete After': 'never',
-      'Contact Before Delete': '1018-MattOberlies-CaliberMobile',
-      Purpose: 'Backend for Caliber Mobile',
+      'Resource Purpose': 'Backend for Caliber Mobile',
     },
   },
 
@@ -140,10 +138,6 @@ const serverlessConfiguration: AWS = {
           Engine: 'postgres',
           MasterUsername: DB_USERNAME,
           MasterUserPassword: DB_PASSWORD,
-
-          // delete in prod
-          BackupRetentionPeriod: 0,
-          DeleteAutomatedBackups: true,
         },
       },
     },
