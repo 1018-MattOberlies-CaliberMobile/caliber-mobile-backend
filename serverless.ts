@@ -172,13 +172,16 @@ const serverlessConfiguration: AWS = {
     },
     Outputs: {
       caliberMobileDBInstanceOutput: {
-        Description: 'RDS Database Instace Output',
+        Description: 'RDS Database Instace Outputs',
         Value: {
           Ref: 'caliberMobileDB',
         },
       },
     },
   },
+  // outputs: {
+  //   caliberDBSLSOutput: 'caliberMobileDBInstanceOutput',
+  // },
 };
 
 module.exports = serverlessConfiguration;
