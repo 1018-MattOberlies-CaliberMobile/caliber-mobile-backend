@@ -9,13 +9,13 @@ const {
 } = process.env;
 
 const supported = ['mysql', 'postgres', 'sqlite', 'mariadb', 'mssql'];
-if (supported.includes(DATABASE_DIALECT)) {
-  console.error(DATABASE_DIALECT, 'is not support in sequelize', supported);
-  process.exit(-3);
-}
+// if (supported.includes(DATABASE_DIALECT)) {
+//   console.error(DATABASE_DIALECT, 'is not support in sequelize', supported);
+//   process.exit(-3);
+// }
 
 export const options: Options = {
-  database: DATABASE_NAME,
+  // database: DATABASE_NAME,
   username: DATABASE_USERNAME,
   password: DATABASE_PASSWORD,
   host: DATABASE_HOST,
@@ -24,9 +24,10 @@ export const options: Options = {
   pool: {
     max: 5,
     min: 0,
-    acquire: 300,
+    acquire: 6000,
     idle: 200,
   },
 };
 
-export default new Sequelize(options);
+export const db = new Sequelize(options);
+db.authenticate().then(console.debug).catch(console.error);
