@@ -3,12 +3,12 @@ import 'source-map-support/register';
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
 import { formatJSONResponse } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
+import { User } from 'src/repositories/models';
 
 const getUserByIdHandler: ValidatedEventAPIGatewayProxyEvent<unknown> = async (event) => {
-  console.log('filler');
+  const user = await User.findByPk(event.path.split('/').pop())
   return formatJSONResponse({
-    message: 'Hello get note by id, welcome to the exciting Serverless world!',
-    event,
+    user
   });
 };
 

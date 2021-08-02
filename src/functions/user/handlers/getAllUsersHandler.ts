@@ -3,12 +3,12 @@ import 'source-map-support/register';
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
 import { formatJSONResponse } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
+import { User } from '../../../repositories/models'
 
 const getAllUsersHandler: ValidatedEventAPIGatewayProxyEvent<unknown> = async (event) => {
-  console.log('filler');
+  const users = await User.findAll();
   return formatJSONResponse({
-    message: 'Hello get all, welcome to the exciting Serverless world!',
-    event,
+    users
   });
 };
 
