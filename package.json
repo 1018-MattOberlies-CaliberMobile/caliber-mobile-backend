@@ -18,9 +18,11 @@
     "babel-jest": "^27.0.6",
     "pg": "^8.7.1",
     "source-map-support": "^0.5.19",
-    "ts-jest": "^27.0.4"
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.6.5"
   },
   "devDependencies": {
+    "ts-jest": "^27.0.4",
     "@serverless/typescript": "^2.52.1",
     "@types/aws-lambda": "^8.10.71",
     "@types/jest": "^26.0.24",

@@ -11,6 +11,6 @@ export default interface Note {
     noteId: string,
     noteContent: string,
     technicalScore: TechnicalScore,
-    associate: Associate,
+    associate?: Associate,
     weekNumber: number,
 };
