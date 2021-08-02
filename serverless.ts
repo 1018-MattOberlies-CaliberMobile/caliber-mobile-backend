@@ -48,6 +48,7 @@ const {
   DB_ENGINE,
   DB_USERNAME,
   DB_PASSWORD,
+  DB_HOST,
 } = process.env;
 
 if (!(
@@ -57,7 +58,7 @@ if (!(
   process.exit(-1);
 }
 
-console.debug('>>', DB_NAME, DB_ENGINE, DB_ALLOCATED_STORAGE, 'GiB', DB_INSTANCE_CLASS);
+console.debug('Database info:', DB_NAME, DB_ENGINE, DB_ALLOCATED_STORAGE, 'GiB', DB_INSTANCE_CLASS);
 
 const serverlessConfiguration: AWS = {
   service: 'caliber-mobile-backend',
@@ -94,8 +95,8 @@ const serverlessConfiguration: AWS = {
       DATABASE_DIALECT: DB_ENGINE,
       DATABASE_USERNAME: DB_USERNAME,
       DATABASE_PASSWORD: DB_PASSWORD,
-      // TODO: get endpoint of database
-      // DATABASE_HOST: DB_HOST,
+      // TODO: get endpoint of db instance through serverless
+      DATABASE_HOST: DB_HOST,
     },
     lambdaHashingVersion: '20201221',
     stackTags: {
