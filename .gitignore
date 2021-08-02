@@ -3,5 +3,8 @@ node_modules
 .esbuild
 package-lock.json
 .env
+<<<<<<< HEAD
 .slsinfo
+=======
+>>>>>>> 76ca440 (jest and sequelize init (#3))
 coverage/
