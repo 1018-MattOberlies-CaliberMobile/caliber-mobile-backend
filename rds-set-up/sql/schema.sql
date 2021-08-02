@@ -39,7 +39,6 @@ CREATE TABLE IF NOT EXISTS note (
 	batch_id UUID NOT NULL REFERENCES public.batch (batch_id)
 );
 
-
 CREATE TABLE IF NOT EXISTS note_associate (
 	note_id UUID REFERENCES public.batch (batch_id),
 	associate_id UUID REFERENCES public.associate (associate_id),

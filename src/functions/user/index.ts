@@ -4,7 +4,7 @@ import updateUserSchema from './schemas/updateUserSchema';
 
 type FunctionHandler = 'getAllUsersHandler' | 'createUserHandler' | 'updateUserHandler' | 'getUserByIdHandler';
 
-const user = 'user';
+const user = 'api/v1/user';
 const hanlderPath = (fun: FunctionHandler) => `${handlerPath(__dirname)}/handlers/${fun}.main`;
 
 export const createUser = {
