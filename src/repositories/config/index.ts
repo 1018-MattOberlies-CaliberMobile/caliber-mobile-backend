@@ -30,5 +30,4 @@ export const options: Options = {
 };
 
 export const db = new Sequelize(options);
-
 db.authenticate().then(console.debug).catch(console.error);
