@@ -22,8 +22,8 @@
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.6.5",
     "source-map-support": "^0.5.19",
-    "ts-jest": "^27.0.4"
-
+    "ts-jest": "^27.0.4",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@serverless/typescript": "^2.52.1",

@@ -1,7 +1,6 @@
 import { DataTypes, Model, ModelAttributeColumnOptions } from 'sequelize';
 import { Role, TechnicalScoreString } from 'src/@types';
-
-import db from '../config';
+import { db } from '../config';
 
 const UUID_DATA_TYPE_PK: DataTypes.DataType | ModelAttributeColumnOptions<Model<any, any>> = {
   type: DataTypes.UUID,
@@ -10,16 +9,19 @@ const UUID_DATA_TYPE_PK: DataTypes.DataType | ModelAttributeColumnOptions<Model<
   primaryKey: true,
 };
 
-const User = db.define('user', {
+export const User = db.define('users', {
   userId: UUID_DATA_TYPE_PK,
   role: {
     type: DataTypes.ENUM<Role>('Trainer', 'Admin', 'QC_Analyst'),
     allowNull: false,
     defaultValue: 'Trainer',
   },
+},
+{
+  tableName: 'users'
 });
 
-const Note = db.define('note', {
+export const Note = db.define('notes', {
   noteId: UUID_DATA_TYPE_PK,
   noteContent: {
     type: DataTypes.TEXT,
@@ -32,9 +34,12 @@ const Note = db.define('note', {
   weekNumber: {
     type: DataTypes.INTEGER,
   },
+},
+{
+  tableName: 'notes'
 });
 
-const Associate = db.define('associate', {
+export const Associate = db.define('associates', {
   associateId: UUID_DATA_TYPE_PK,
   firstName: {
     type: DataTypes.STRING,
@@ -44,9 +49,12 @@ const Associate = db.define('associate', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+},
+{
+  tableName: 'associates'
 });
 
-const Batch = db.define('batch', {
+export const Batch = db.define('batches', {
   batchId: UUID_DATA_TYPE_PK,
   batchTitle: {
     type: DataTypes.STRING,
@@ -58,6 +66,9 @@ const Batch = db.define('batch', {
   endDate: {
     type: DataTypes.DATE,
   },
+},
+{
+  tableName: 'batches'
 });
 
 // 1:1 for note and batch
@@ -84,6 +95,4 @@ Batch.belongsToMany(User, {
   through: 'user_batch',
 });
 
-export default {
-  User, Note, Associate, Batch,
-} as const;
+db.sync({ force: true }).then(console.debug).catch(console.error)
