@@ -16,6 +16,8 @@
     "@middy/core": "^1.5.2",
     "@middy/http-json-body-parser": "^1.5.2",
     "pg": "^8.7.1",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.6.5",
     "source-map-support": "^0.5.19"
   },
   "devDependencies": {
