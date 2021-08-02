@@ -7,6 +7,6 @@
 import { Role } from '../@types';
 
 export default interface User {
-    userId: string,
+    username: string,
     role: Role,
 };
