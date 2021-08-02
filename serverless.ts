@@ -84,6 +84,7 @@ const serverlessConfiguration: AWS = {
   provider: {
     name: 'aws',
     region: 'us-east-1',
+    profile: 'sls-caliber',
     runtime: 'nodejs14.x',
     apiGateway: {
       minimumCompressionSize: 1024,
@@ -95,7 +96,6 @@ const serverlessConfiguration: AWS = {
       DATABASE_DIALECT: DB_ENGINE,
       DATABASE_USERNAME: DB_USERNAME,
       DATABASE_PASSWORD: DB_PASSWORD,
-      // TODO: get endpoint of db instance through serverless
       DATABASE_HOST: DB_HOST,
     },
     lambdaHashingVersion: '20201221',
@@ -103,9 +103,9 @@ const serverlessConfiguration: AWS = {
       'Created By': '1018-MattOberlies-CaliberMobile',
       'Resource Purpose': 'Backend for Caliber Mobile',
     },
-    iamManagedPolicies: [
-      'arn:aws:iam::855430746673:role/cloud-native-lambda-execution-role',
-    ],
+    iam: {
+      role: 'arn:aws:iam::855430746673:role/cloud-native-lambda-execution-role',
+    },
   },
 
   functions: {
@@ -157,7 +157,8 @@ const serverlessConfiguration: AWS = {
       caliberMobileDB: {
         Type: 'AWS::RDS::DBInstance',
         Properties: {
-          DBName: DB_NAME,
+          DBName: 'postgres',
+          DBInstanceIdentifier: DB_NAME,
           DBSecurityGroups: [
             { Ref: 'dbSecurityGroup' },
           ],
@@ -166,6 +167,14 @@ const serverlessConfiguration: AWS = {
           Engine: DB_ENGINE,
           MasterUsername: DB_USERNAME,
           MasterUserPassword: DB_PASSWORD,
+        },
+      },
+    },
+    Outputs: {
+      caliberMobileDBInstanceOutput: {
+        Description: 'RDS Database Instace Output',
+        Value: {
+          Ref: 'caliberMobileDB',
         },
       },
     },

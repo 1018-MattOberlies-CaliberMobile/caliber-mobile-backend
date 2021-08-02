@@ -3,8 +3,9 @@ Install serverless
 ```
 ```
 
-Set-up an admin role in aws
+Set-up the aws profile
 ```
+aws configure --profile sls-caliber
 ```
 
 Clone the repo
