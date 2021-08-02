@@ -41,7 +41,24 @@ import {
 
 dotenv.config({});
 
-const { DB_USERNAME, DB_PASSWORD } = process.env;
+const {
+  DB_NAME,
+  DB_ALLOCATED_STORAGE,
+  DB_INSTANCE_CLASS,
+  DB_ENGINE,
+  DB_USERNAME,
+  DB_PASSWORD,
+  DB_HOST,
+} = process.env;
+
+if (!(
+  DB_NAME || DB_ALLOCATED_STORAGE || DB_INSTANCE_CLASS || DB_ENGINE || DB_USERNAME || DB_PASSWORD
+)) {
+  console.error('Please provide all the environment variables in the .env file');
+  process.exit(-1);
+}
+
+console.debug('Database info:', DB_NAME, DB_ENGINE, DB_ALLOCATED_STORAGE, 'GiB', DB_INSTANCE_CLASS);
 
 const serverlessConfiguration: AWS = {
   service: 'caliber-mobile-backend',
@@ -67,6 +84,7 @@ const serverlessConfiguration: AWS = {
   provider: {
     name: 'aws',
     region: 'us-east-1',
+    profile: 'sls-caliber',
     runtime: 'nodejs14.x',
     apiGateway: {
       minimumCompressionSize: 1024,
@@ -74,13 +92,19 @@ const serverlessConfiguration: AWS = {
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
+      DATABASE_NAME: DB_NAME,
+      DATABASE_DIALECT: DB_ENGINE,
+      DATABASE_USERNAME: DB_USERNAME,
+      DATABASE_PASSWORD: DB_PASSWORD,
+      DATABASE_HOST: DB_HOST,
     },
     lambdaHashingVersion: '20201221',
     stackTags: {
       'Created By': '1018-MattOberlies-CaliberMobile',
-      'Delete After': 'never',
-      'Contact Before Delete': '1018-MattOberlies-CaliberMobile',
-      Purpose: 'Backend for Caliber Mobile',
+      'Resource Purpose': 'Backend for Caliber Mobile',
+    },
+    iam: {
+      role: 'arn:aws:iam::855430746673:role/cloud-native-lambda-execution-role',
     },
   },
 
@@ -114,6 +138,7 @@ const serverlessConfiguration: AWS = {
     updateUser,
     getUserById,
   },
+
   resources: {
     Resources: {
       dbSecurityGroup: {
@@ -132,22 +157,31 @@ const serverlessConfiguration: AWS = {
       caliberMobileDB: {
         Type: 'AWS::RDS::DBInstance',
         Properties: {
+          DBName: 'postgres',
+          DBInstanceIdentifier: DB_NAME,
           DBSecurityGroups: [
             { Ref: 'dbSecurityGroup' },
           ],
-          AllocatedStorage: '20',
-          DBInstanceClass: 'db.t2.micro',
-          Engine: 'postgres',
+          AllocatedStorage: DB_ALLOCATED_STORAGE,
+          DBInstanceClass: DB_INSTANCE_CLASS,
+          Engine: DB_ENGINE,
           MasterUsername: DB_USERNAME,
           MasterUserPassword: DB_PASSWORD,
-
-          // delete in prod
-          BackupRetentionPeriod: 0,
-          DeleteAutomatedBackups: true,
+        },
+      },
+    },
+    Outputs: {
+      caliberMobileDBInstanceOutput: {
+        Description: 'RDS Database Instace Outputs',
+        Value: {
+          Ref: 'caliberMobileDB',
         },
       },
     },
   },
+  // outputs: {
+  //   caliberDBSLSOutput: 'caliberMobileDBInstanceOutput',
+  // },
 };
 
 module.exports = serverlessConfiguration;

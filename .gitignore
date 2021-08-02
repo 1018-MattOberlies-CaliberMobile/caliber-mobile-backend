@@ -3,4 +3,5 @@ node_modules
 .esbuild
 package-lock.json
 .env
+.slsinfo
 coverage/

@@ -11,7 +11,7 @@
     "target": "ES2020",
     "outDir": "lib"
   },
-  "include": ["src/**/*.ts", "serverless.ts", "src/jest/.test.ts"],
+  "include": ["src/**/*.ts", "serverless.ts", "src/@types/index.d.ts", "src/jest/.test.ts"],
   "exclude": [
     "node_modules/**/*",
     ".serverless/**/*",
