@@ -40,6 +40,7 @@
     "serverless-esbuild": "^1.16.1",
     "serverless-plugin-resource-tagging": "^1.1.1",
     "serverless-webpack": "^5.3.5",
+    "ts-jest": "^27.0.4",
     "ts-loader": "^8.0.15",
     "ts-node": "^9.1.1",
     "tsconfig-paths": "^3.9.0",
