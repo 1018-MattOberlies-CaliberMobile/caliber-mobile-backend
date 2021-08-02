@@ -16,12 +16,9 @@ export const User = db.define('users', {
     allowNull: false,
     defaultValue: 'Trainer',
   },
-},
-{
-  tableName: 'users'
 });
 
-export const Note = db.define('notes', {
+const Note = db.define('note', {
   noteId: UUID_DATA_TYPE_PK,
   noteContent: {
     type: DataTypes.TEXT,
@@ -34,12 +31,9 @@ export const Note = db.define('notes', {
   weekNumber: {
     type: DataTypes.INTEGER,
   },
-},
-{
-  tableName: 'notes'
 });
 
-export const Associate = db.define('associates', {
+const Associate = db.define('associate', {
   associateId: UUID_DATA_TYPE_PK,
   firstName: {
     type: DataTypes.STRING,
@@ -49,12 +43,9 @@ export const Associate = db.define('associates', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-},
-{
-  tableName: 'associates'
 });
 
-export const Batch = db.define('batches', {
+const Batch = db.define('batch', {
   batchId: UUID_DATA_TYPE_PK,
   batchTitle: {
     type: DataTypes.STRING,
@@ -66,9 +57,6 @@ export const Batch = db.define('batches', {
   endDate: {
     type: DataTypes.DATE,
   },
-},
-{
-  tableName: 'batches'
 });
 
 // 1:1 for note and batch
@@ -95,4 +83,6 @@ Batch.belongsToMany(User, {
   through: 'user_batch',
 });
 
-db.sync({ force: true }).then(console.debug).catch(console.error)
+export default {
+  User, Note, Associate, Batch,
+} as const;
