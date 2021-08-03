@@ -3,10 +3,10 @@ import 'source-map-support/register';
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
 import { formatJSONResponse } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
-import { User } from '../../../repositories/models'
+import db from '../../../repositories/models'
 
 const getAllUsersHandler: ValidatedEventAPIGatewayProxyEvent<unknown> = async (event) => {
-  const users = await User.findAll();
+  const users = await db.User.findAll();
   return formatJSONResponse({
     users
   });
