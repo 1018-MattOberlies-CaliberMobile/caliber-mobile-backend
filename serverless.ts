@@ -30,6 +30,7 @@ import {
   getBatchById,
   deleteBatchById,
   getBatchByYear,
+  getBatchYears,
 } from '@functions/batch';
 
 import {
@@ -132,6 +133,7 @@ const serverlessConfiguration: AWS = {
     getBatchById,
     deleteBatchById,
     getBatchByYear,
+    getBatchYears,
 
     getAllUsers,
     createUser,
