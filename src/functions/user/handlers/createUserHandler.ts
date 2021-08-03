@@ -5,10 +5,11 @@ import { formatJSONResponse } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
 
 import schema from '../schemas/createUserSchema';
-import { User } from 'src/repositories/models';
+import DB from 'src/repositories/models';
 
 const createUserHandler: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
-  const created = await User.create()
+  const created = await DB.User.create();
+  console.debug('>> created user');
   return formatJSONResponse({
     created
   });

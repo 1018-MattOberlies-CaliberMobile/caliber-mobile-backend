@@ -9,7 +9,7 @@ const {
 } = process.env;
 
 const supported = ['mysql', 'postgres', 'sqlite', 'mariadb', 'mssql'];
-if (supported.includes(DATABASE_DIALECT)) {
+if (!supported.includes(DATABASE_DIALECT)) {
   console.error(DATABASE_DIALECT, 'is not support in sequelize', supported);
   process.exit(-3);
 }
@@ -29,4 +29,22 @@ export const options: Options = {
   },
 };
 
+<<<<<<< HEAD
 export default new Sequelize(options);
+=======
+const init = (): Sequelize => {
+  const db = new Sequelize(options);
+  db.authenticate().then(() => console.log('connected to database')).catch(console.error);
+  db.sync().then((syncedDB) => {
+    console.log('>> sync db');
+    return syncedDB;
+  }).catch((err) => {
+    console.error(err);
+  });
+  console.log('>> not sync');
+  return db;
+};
+
+export default init();
+
+>>>>>>> 56b6363 (fixed db problem)
