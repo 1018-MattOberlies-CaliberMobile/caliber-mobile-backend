@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import BatchDAO from '../DAOs/batch.dao';
+import BatchDAO from './batch.dao';
 
 describe('batch DAO', () => {
   describe('getBatchYears', () => {
