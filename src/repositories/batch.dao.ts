@@ -2,7 +2,7 @@
 // Can eventaully remove above rule
 
 import Batch from 'src/models/batch';
-import mockBatch from '../mock data/batch';
+import mockBatch from '../mock-data/batch';
 
 class BatchDAO {
   constructor(
