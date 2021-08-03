@@ -1,15 +1,15 @@
 import 'source-map-support/register';
 import NoteDAO from '../../../repositories/noteDAO/note.dao';
-import schema from '../schemas/getNotesByBatchIdAndByWeekSchema'
 
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
 import { formatJSONResponse } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
 
 // eslint-disable-next-line max-len
-const getNotesByBatchIdAndWeekHandler: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
-  const { batchId, weekNumber} = event.body
-  const data = await NoteDAO.getNotesByBatchAndWeek(batchId, weekNumber);
+const getNotesByBatchIdAndWeekHandler: ValidatedEventAPIGatewayProxyEvent<unknown> = async (event) => {
+  const { batchId, week} = event.pathParameters
+  const data = await NoteDAO.getNotesByBatchAndWeek(batchId, Number(week));
+
   return formatJSONResponse({
     message: data,
     event,
