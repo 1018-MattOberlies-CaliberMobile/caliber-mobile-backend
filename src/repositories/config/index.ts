@@ -29,9 +29,6 @@ export const options: Options = {
   },
 };
 
-<<<<<<< HEAD
-export default new Sequelize(options);
-=======
 const init = (): Sequelize => {
   const db = new Sequelize(options);
   db.authenticate().then(() => console.log('connected to database')).catch(console.error);
@@ -47,4 +44,3 @@ const init = (): Sequelize => {
 
 export default init();
 
->>>>>>> 56b6363 (fixed db problem)
