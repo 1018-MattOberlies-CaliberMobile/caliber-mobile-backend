@@ -5,12 +5,13 @@ import { formatJSONResponse } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
 
 import schema from '../schemas/createUserSchema';
+import DB from 'src/repositories/models';
 
 const createUserHandler: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
-  console.log('filler');
+  const created = await DB.User.create();
+  console.debug('>> created user');
   return formatJSONResponse({
-    message: `Hello ${event.body.name}, welcome to the exciting Serverless world!`,
-    event,
+    created
   });
 };
 

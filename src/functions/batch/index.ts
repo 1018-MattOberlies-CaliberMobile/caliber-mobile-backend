@@ -4,7 +4,7 @@ import updateBatchSchema from './schemas/updateBatchSchema';
 
 type FunctionHandler = 'getAllBatchesHandler' | 'createBatchHandler' | 'updateBatchHandler' | 'getBatchByIdHandler' | 'getBatchByYearHandler' | 'deleteBatchByIdHandler';
 
-const batch = 'batch';
+const batch = 'api/v1/batch';
 const hanlderPath = (fun: FunctionHandler) => `${handlerPath(__dirname)}/handlers/${fun}.main`;
 
 export const getAllBatches = {

@@ -4,7 +4,7 @@ import updateAssociateSchema from './schemas/updateAssociateSchema';
 
 type FunctionHandler = 'getAllAssociatesHandler' | 'createAssociateHandler' | 'updateAssociateHandler' | 'getAssociateByIdHandler' | 'getAssociateByBatchIdHandler' | 'deleteAssociateByIdHandler'
 
-const associate = 'associate';
+const associate = 'api/v1/associate';
 const hanlderPath = (fun: FunctionHandler) => `${handlerPath(__dirname)}/handlers/${fun}.main`;
 
 export const createAssociate = {
