@@ -1,5 +1,5 @@
 import * as data from '../../mock-data/batch.json';
-import NoteDAO from '../../repositories/note.dao';
+import NoteDAO from '../../repositories/noteDAO/note.dao';
 
 jest.mock('../../DAOs/note.dao.ts');
 
