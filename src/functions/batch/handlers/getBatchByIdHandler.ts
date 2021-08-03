@@ -1,5 +1,5 @@
 import 'source-map-support/register';
-import BatchDao from 'src/repositories/batch.dao';
+import BatchDao from 'src/repositories/batchDAO/batch.dao';
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
 import { formatJSONResponse } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
