@@ -9,6 +9,7 @@ import { middyfy } from '@libs/lambda';
 const getNotesByBatchIdAndWeekHandler: ValidatedEventAPIGatewayProxyEvent<unknown> = async (event) => {
   const { batchId, week} = event.pathParameters
   const data = await NoteDAO.getNotesByBatchAndWeek(batchId, Number(week));
+
   return formatJSONResponse({
     message: data,
     event,
