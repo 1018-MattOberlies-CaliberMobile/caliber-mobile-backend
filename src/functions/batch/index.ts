@@ -2,7 +2,7 @@ import { handlerPath } from '@libs/handlerResolver';
 import createBatchSchema from './schemas/createBatchSchema';
 import updateBatchSchema from './schemas/updateBatchSchema';
 
-type FunctionHandler = 'getAllBatchesHandler' | 'createBatchHandler' | 'updateBatchHandler' | 'getBatchByIdHandler' | 'getBatchByYearHandler' | 'deleteBatchByIdHandler';
+type FunctionHandler = 'getAllBatchesHandler' | 'createBatchHandler' | 'updateBatchHandler' | 'getBatchByIdHandler' | 'getBatchByYearHandler' | 'deleteBatchByIdHandler' | 'getBatchYearsHandler';
 
 const batch = 'api/v1/batch';
 const hanlderPath = (fun: FunctionHandler) => `${handlerPath(__dirname)}/handlers/${fun}.main`;
@@ -98,6 +98,22 @@ export const getBatchByYear = {
       http: {
         method: 'get',
         path: `${batch}/year/{year}`,
+        cors: true,
+        request: {
+          schema: null,
+        },
+      },
+    },
+  ],
+};
+
+export const getBatchYears = {
+  handler: hanlderPath('getBatchYearsHandler'),
+  events: [
+    {
+      http: {
+        method: 'get',
+        path: `${batch}/year/`,
         cors: true,
         request: {
           schema: null,
