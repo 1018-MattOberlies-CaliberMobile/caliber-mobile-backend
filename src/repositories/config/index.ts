@@ -32,7 +32,7 @@ export const options: Options = {
 const init = (): Sequelize => {
   const db = new Sequelize(options);
   db.authenticate().then(() => console.log('connected to database')).catch(console.error);
-  db.sync().then((syncedDB) => {
+  db.sync({ force: false }).then((syncedDB) => {
     console.log('>> sync db');
     return syncedDB;
   }).catch((err) => {

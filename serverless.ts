@@ -46,14 +46,17 @@ const {
   DB_NAME,
   DB_ALLOCATED_STORAGE,
   DB_INSTANCE_CLASS,
+  DB_ENGINE_VERSION,
   DB_ENGINE,
   DB_USERNAME,
   DB_PASSWORD,
   DB_HOST,
+  DB_DELETE_AUTO_BACKUP,
+  DB_BACKUP_RETENTION_POLICY,
 } = process.env;
 
 if (!(
-  DB_NAME || DB_ALLOCATED_STORAGE || DB_INSTANCE_CLASS || DB_ENGINE || DB_USERNAME || DB_PASSWORD
+  DB_NAME || DB_ALLOCATED_STORAGE || DB_INSTANCE_CLASS || DB_ENGINE_VERSION || DB_ENGINE || DB_USERNAME || DB_PASSWORD
 )) {
   console.error('Please provide all the environment variables in the .env file');
   process.exit(-1);
@@ -62,7 +65,7 @@ if (!(
 console.debug('Database info:', DB_NAME, DB_ENGINE, DB_ALLOCATED_STORAGE, 'GiB', DB_INSTANCE_CLASS);
 
 const serverlessConfiguration: AWS = {
-  service: 'caliber-mobile-backend',
+  service: 'calibermobile',
   frameworkVersion: '2',
   package: {
     individually: true,
@@ -85,7 +88,7 @@ const serverlessConfiguration: AWS = {
   provider: {
     name: 'aws',
     region: 'us-east-1',
-    profile: 'sls-caliber',
+    profile: 'sls-caliber-2',
     runtime: 'nodejs14.x',
     apiGateway: {
       minimumCompressionSize: 1024,
@@ -104,9 +107,9 @@ const serverlessConfiguration: AWS = {
       'Created By': '1018-MattOberlies-CaliberMobile',
       'Resource Purpose': 'Backend for Caliber Mobile',
     },
-    iam: {
-      role: 'arn:aws:iam::855430746673:role/cloud-native-lambda-execution-role',
-    },
+    // iam: {
+    //   role: 'arn:aws:iam::855430746673:role/cloud-native-lambda-execution-role',
+    // },
   },
 
   functions: {
@@ -167,23 +170,15 @@ const serverlessConfiguration: AWS = {
           AllocatedStorage: DB_ALLOCATED_STORAGE,
           DBInstanceClass: DB_INSTANCE_CLASS,
           Engine: DB_ENGINE,
+          EngineVersion: DB_ENGINE_VERSION,
           MasterUsername: DB_USERNAME,
           MasterUserPassword: DB_PASSWORD,
-        },
-      },
-    },
-    Outputs: {
-      caliberMobileDBInstanceOutput: {
-        Description: 'RDS Database Instace Outputs',
-        Value: {
-          Ref: 'caliberMobileDB',
+          BackupRetentionPeriod: DB_BACKUP_RETENTION_POLICY,
+          DeleteAutomatedBackups: DB_DELETE_AUTO_BACKUP,
         },
       },
     },
   },
-  // outputs: {
-  //   caliberDBSLSOutput: 'caliberMobileDBInstanceOutput',
-  // },
 };
 
 module.exports = serverlessConfiguration;
