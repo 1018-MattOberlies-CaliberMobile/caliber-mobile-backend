@@ -5,15 +5,13 @@ import { Role, TechnicalScoreString } from 'src/@types';
 import db from '../config';
 
 const init = () => {
-  const UUID_DATA_TYPE_PK: DataTypes.DataType | ModelAttributeColumnOptions<Model<any, any>> = {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    allowNull: false,
-    primaryKey: true,
-  };
-
   const User = db.define('users', {
-    username: UUID_DATA_TYPE_PK,
+    username: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true,
+    },
     role: {
       type: DataTypes.ENUM<Role>('Trainer', 'Admin', 'QC_Analyst'),
       allowNull: false,
@@ -22,7 +20,12 @@ const init = () => {
   });
 
   const Note = db.define('notes', {
-    noteId: UUID_DATA_TYPE_PK,
+    noteId: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true,
+    },
     noteContent: {
       type: DataTypes.TEXT,
     },
@@ -37,7 +40,12 @@ const init = () => {
   });
 
   const Associate = db.define('associates', {
-    associateId: UUID_DATA_TYPE_PK,
+    associateId: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true,
+    },
     firstName: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -49,7 +57,12 @@ const init = () => {
   });
 
   const Batch = db.define('batches', {
-    batchId: UUID_DATA_TYPE_PK,
+    batchId: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true,
+    },
     batchTitle: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -62,28 +75,23 @@ const init = () => {
     },
   });
 
-  // 1:1 for note and batch
-  Note.belongsTo(Batch);
 
-  // 1:1 for associate and batch
-  Associate.belongsTo(Batch);
+  // 1:M
+  Batch.hasMany(Note);
+  
+  // 1:1
+  Note.belongsTo(Associate);
 
-  // M:N for notes and associates
-  Note.belongsToMany(Associate, {
-    through: 'notes_associate',
-  });
-
-  Associate.belongsToMany(Note, {
-    through: 'notes_associate',
-  });
+  // 1:M
+  Batch.hasMany(Associate);
 
   // M:N for Eleveted users and batches
   User.belongsToMany(Batch, {
-    through: 'users_batch',
+    through: 'user_batch',
   });
 
   Batch.belongsToMany(User, {
-    through: 'users_batch',
+    through: 'user_batch',
   });
 
   // before create

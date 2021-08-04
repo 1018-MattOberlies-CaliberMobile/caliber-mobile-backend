@@ -1,0 +1,6 @@
+{
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": "{\"noteContent\": \"Frederic\", \"technicalScore\": 2, \"noteContent\": \"Frederic\",\"associate\": {\"associateId\": \"274c3b11-20a7-43be-8fca-fa21f63ff167\", \"firstName\":\"Dustin\", \"lastName\": \"Díaz\"}, \"weekNumber\": 5}"
+  }
