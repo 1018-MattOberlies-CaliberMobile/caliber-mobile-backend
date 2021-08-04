@@ -4,13 +4,13 @@
 /* eslint-disable @typescript-eslint/no-useless-constructor */
 /* eslint-disable no-unused-vars */
 
-import { TechnicalScore } from '../@types';
+import { TechnicalScore, TechnicalScoreString } from '../@types';
 import Associate from './associate';
 
 export default interface Note {
-    noteId: string,
+    noteId?: string,
     noteContent: string,
-    technicalScore: TechnicalScore,
+    technicalScore: TechnicalScoreString,
     associate?: Associate,
     weekNumber: number,
 };
