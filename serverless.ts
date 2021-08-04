@@ -51,6 +51,8 @@ const {
   DB_USERNAME,
   DB_PASSWORD,
   DB_HOST,
+  DB_DELETE_AUTO_BACKUP,
+  DB_BACKUP_RETENTION_POLICY,
 } = process.env;
 
 if (!(
@@ -63,7 +65,7 @@ if (!(
 console.debug('Database info:', DB_NAME, DB_ENGINE, DB_ALLOCATED_STORAGE, 'GiB', DB_INSTANCE_CLASS);
 
 const serverlessConfiguration: AWS = {
-  service: 'caliber-mobile-backend',
+  service: 'calibermobile',
   frameworkVersion: '2',
   package: {
     individually: true,
@@ -86,7 +88,7 @@ const serverlessConfiguration: AWS = {
   provider: {
     name: 'aws',
     region: 'us-east-1',
-    profile: 'sls-caliber',
+    profile: 'sls-caliber-2',
     runtime: 'nodejs14.x',
     apiGateway: {
       minimumCompressionSize: 1024,
@@ -171,23 +173,12 @@ const serverlessConfiguration: AWS = {
           EngineVersion: DB_ENGINE_VERSION,
           MasterUsername: DB_USERNAME,
           MasterUserPassword: DB_PASSWORD,
-          BackupRetentionPeriod: 0,
-          DeleteAutomatedBackups: true,
-        },
-      },
-    },
-    Outputs: {
-      caliberMobileDBInstanceOutput: {
-        Description: 'RDS Database Instace Outputs',
-        Value: {
-          Ref: 'caliberMobileDB',
+          BackupRetentionPeriod: DB_BACKUP_RETENTION_POLICY,
+          DeleteAutomatedBackups: DB_DELETE_AUTO_BACKUP,
         },
       },
     },
   },
-  // outputs: {
-  //   caliberDBSLSOutput: 'caliberMobileDBInstanceOutput',
-  // },
 };
 
 module.exports = serverlessConfiguration;
