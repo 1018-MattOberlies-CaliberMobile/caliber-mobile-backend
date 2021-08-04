@@ -16,13 +16,12 @@ const getBatchByYearHandler: ValidatedEventAPIGatewayProxyEvent<unknown> = async
 
   cognito.getUser({ AccessToken, }, async (err: AWS.AWSError, res: GetUserResponse) => {
     if(err) {
-      return formatJSONResponse({ statusCode: 403, body: ''});
+      return formatJSONResponse({ statusCode: 403, body: err.message});
     }
-    const batches: Batch[] = (await db.Batch.findAll()).map((response) => response.get());
-
     const userRole = res.UserAttributes.find( (attr) => attr.Name === 'custom:role').Value;
     const username = res.Username;
     
+    const batches: Batch[] = (await db.Batch.findAll()).map((response) => response.get()); 
     const returnBatches = [];
 
     batches.forEach((batch) => {
@@ -35,7 +34,6 @@ const getBatchByYearHandler: ValidatedEventAPIGatewayProxyEvent<unknown> = async
           returnBatches.push(batch);
         }
       }
-      
     });
 
     return formatJSONResponse({
