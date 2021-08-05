@@ -77,6 +77,7 @@ const serverlessConfiguration: AWS = {
       sourcemap: true,
       external: [
         'aws-sdk',
+        'pg-native'
       ],
       watch: {
         pattern: ['src/**/*'],

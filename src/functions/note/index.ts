@@ -14,6 +14,7 @@ export const createNote = {
       http: {
         method: 'post',
         path: note,
+        integration: 'lambda',
         cors: true,
         request: {
           schema: {

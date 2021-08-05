@@ -1,4 +1,5 @@
 import { Dialect, Options, Sequelize } from 'sequelize';
+import * as pg from 'pg';
 
 const {
   DATABASE_NAME,
@@ -27,6 +28,7 @@ export const options: Options = {
     acquire: 6000,
     idle: 200,
   },
+  dialectModule: pg,
 };
 
 const init = (): Sequelize => {
