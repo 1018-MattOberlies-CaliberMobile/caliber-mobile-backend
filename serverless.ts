@@ -77,6 +77,7 @@ const serverlessConfiguration: AWS = {
       sourcemap: true,
       external: [
         'aws-sdk',
+        'pg'
       ],
       watch: {
         pattern: ['src/**/*'],
@@ -107,9 +108,21 @@ const serverlessConfiguration: AWS = {
       'Created By': '1018-MattOberlies-CaliberMobile',
       'Resource Purpose': 'Backend for Caliber Mobile',
     },
-    // iam: {
-    //   role: 'arn:aws:iam::855430746673:role/cloud-native-lambda-execution-role',
-    // },
+  },
+
+  layers: {
+    postgres: {
+      path: './layer-dir',
+      description: 'PostgreSQL layer',
+      compatibleRuntimes: [
+        'nodejs10.x',
+        'nodejs12.x',
+        'nodejs14.x',
+      ],
+      allowedAccounts: [
+        '*',
+      ],
+    },
   },
 
   functions: {

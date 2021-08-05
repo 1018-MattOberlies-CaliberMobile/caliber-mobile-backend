@@ -1,6 +1,6 @@
 {
-    "headers": {
-      "Content-Type": "application/json"
-    },
-    "body": "{\"noteContent\": \"Frederic\", \"technicalScore\": 2, \"noteContent\": \"Frederic\",\"associate\": {\"associateId\": \"274c3b11-20a7-43be-8fca-fa21f63ff167\", \"firstName\":\"Dustin\", \"lastName\": \"Díaz\"}, \"weekNumber\": 5}"
-  }
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": "{\"noteId\": \"b8210507-3ea8-4fef-a135-7ceaafbba95a\", \"noteContent\": \"Frederic\", \"technicalScore\": 2, \"associate\": {\"associateId\": \"274c3b11-20a7-43be-8fca-fa21f63ff167\", \"firstName\":\"Dustin\", \"lastName\": \"Díaz\"}, \"weekNumber\": 5}"
+}

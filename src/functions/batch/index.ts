@@ -5,10 +5,14 @@ import updateBatchSchema from './schemas/updateBatchSchema';
 type FunctionHandler = 'getAllBatchesHandler' | 'createBatchHandler' | 'updateBatchHandler' | 'getBatchByIdHandler' | 'getBatchByYearHandler' | 'deleteBatchByIdHandler' | 'getBatchYearsHandler';
 
 const batch = 'api/v1/batch';
+const pgLayer = 'PostgresLambdaLayer';
 const hanlderPath = (fun: FunctionHandler) => `${handlerPath(__dirname)}/handlers/${fun}.main`;
 
 export const getAllBatches = {
   handler: hanlderPath('getAllBatchesHandler'),
+  layers: [
+    { Ref: pgLayer }
+  ],
   events: [
     {
       http: {
@@ -25,6 +29,9 @@ export const getAllBatches = {
 
 export const createBatch = {
   handler: hanlderPath('createBatchHandler'),
+  layers: [
+    { Ref: pgLayer }
+  ],
   events: [
     {
       http: {
@@ -43,6 +50,9 @@ export const createBatch = {
 
 export const updateBatch = {
   handler: hanlderPath('updateBatchHandler'),
+  layers: [
+    { Ref: pgLayer }
+  ],
   events: [
     {
       http: {
@@ -61,6 +71,9 @@ export const updateBatch = {
 
 export const getBatchById = {
   handler: hanlderPath('getBatchByIdHandler'),
+  layers: [
+    { Ref: pgLayer }
+  ],
   events: [
     {
       http: {
@@ -77,6 +90,9 @@ export const getBatchById = {
 
 export const deleteBatchById = {
   handler: hanlderPath('deleteBatchByIdHandler'),
+  layers: [
+    { Ref: pgLayer }
+  ],
   events: [
     {
       http: {
@@ -93,6 +109,9 @@ export const deleteBatchById = {
 
 export const getBatchByYear = {
   handler: hanlderPath('getBatchByYearHandler'),
+  layers: [
+    { Ref: pgLayer }
+  ],
   events: [
     {
       http: {
@@ -109,6 +128,9 @@ export const getBatchByYear = {
 
 export const getBatchYears = {
   handler: hanlderPath('getBatchYearsHandler'),
+  layers: [
+    { Ref: pgLayer }
+  ],
   events: [
     {
       http: {
