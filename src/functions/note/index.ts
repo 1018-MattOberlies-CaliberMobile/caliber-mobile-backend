@@ -2,7 +2,7 @@ import { handlerPath } from '@libs/handlerResolver';
 import createNoteSchema from './schemas/createNoteSchema';
 import updateNoteSchema from './schemas/updateNoteSchema';
 
-type FunctionHandler = 'createNoteHandler' | 'getAllNotesHandler' | 'getNoteByIdHandler' | 'updateNoteHandler' | 'deleteNoteHandler' | 'getNotesByBatchIdHandler' | 'getNotesByBatchIdAndByWeekHandler' | 'getNotesByBatchIdAndWeekOverallHandler' | 'getNotesByAssociateIdHandler';
+type FunctionHandler = 'createNoteHandler' | 'getAllNotesHandler' | 'getNoteByIdHandler' | 'deleteNoteHandler' | 'getNotesByBatchIdHandler' | 'getNotesByBatchIdAndByWeekHandler' | 'getNotesByBatchIdAndWeekOverallHandler' | 'getNotesByAssociateIdHandler';
 
 const note = 'api/v1/note';
 const pgLayer = 'PostgresLambdaLayer';
@@ -18,7 +18,6 @@ export const createNote = {
       http: {
         method: 'post',
         path: note,
-        // integration: 'lambda',
         cors: true,
         request: {
           schema: {
@@ -41,9 +40,7 @@ export const getAllNotes = {
         method: 'get',
         path: note,
         cors: true,
-        request: {
-          schema: null,
-        },
+        integration: 'lambda',
       },
     },
   ],
@@ -60,16 +57,14 @@ export const getNoteById = {
         method: 'get',
         path: `${note}/{noteId}`,
         cors: true,
-        request: {
-          schema: null,
-        },
+        integration: 'lambda',
       },
     },
   ],
 };
 
 export const updateNote = {
-  handler: hanlderPath('updateNoteHandler'),
+  handler: hanlderPath('createNoteHandler'),
   layers: [
     { Ref: pgLayer }
   ],
@@ -100,9 +95,7 @@ export const deleteNote = {
         method: 'delete',
         path: `${note}/{noteId}`,
         cors: true,
-        request: {
-          schema: null,
-        },
+        integration: 'lambda',
       },
     },
   ],
@@ -119,9 +112,7 @@ export const getNotesByBatchIdAndByWeek = {
         method: 'get',
         path: `${note}/batch/{batchId}/{week}`,
         cors: true,
-        request: {
-          schema: null,
-        },
+        integration: 'lambda',
       },
     },
   ],
@@ -138,9 +129,7 @@ export const getNotesByBatchId = {
         method: 'get',
         path: `${note}/batch/{batchId}`,
         cors: true,
-        request: {
-          schema: null,
-        },
+        integration: 'lambda',
       },
     },
   ],
@@ -157,9 +146,7 @@ export const getNotesByBatchIdAndWeekOverall = {
         method: 'get',
         path: `${note}/batch/{batchId}/{week}/overall`,
         cors: true,
-        request: {
-          schema: null,
-        },
+        integration: 'lambda',
       },
     },
   ],
@@ -176,9 +163,7 @@ export const getNotesByAssociate = {
         method: 'get',
         path: `${note}/associate/{associateId}`,
         cors: true,
-        request: {
-          schema: null,
-        },
+        integration: 'lambda',
       },
     },
   ],

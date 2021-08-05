@@ -7,6 +7,7 @@
     "test": "jest",
     "db:create": "ts-node rds-set-up/create.ts",
     "db:drop": "ts-node rds-set-up/drop.ts",
+    "db:populate": "ts-node rds-set-up/populate.ts",
     "db:reset": "npm run db:drop && npm run db:create",
     "sls:info": "sls info --verbose | tee ./.slsinfo",
     "sls:deploy": "sls deploy && npm run sls:info"
