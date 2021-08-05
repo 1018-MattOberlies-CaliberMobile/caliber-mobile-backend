@@ -5,16 +5,20 @@ import updateNoteSchema from './schemas/updateNoteSchema';
 type FunctionHandler = 'createNoteHandler' | 'getAllNotesHandler' | 'getNoteByIdHandler' | 'updateNoteHandler' | 'deleteNoteHandler' | 'getNotesByBatchIdHandler' | 'getNotesByBatchIdAndByWeekHandler' | 'getNotesByBatchIdAndWeekOverallHandler' | 'getNotesByAssociateIdHandler';
 
 const note = 'api/v1/note';
+const pgLayer = 'PostgresLambdaLayer';
 const hanlderPath = (fun: FunctionHandler) => `${handlerPath(__dirname)}/handlers/${fun}.main`;
 
 export const createNote = {
   handler: hanlderPath('createNoteHandler'),
+  layers: [
+    { Ref: pgLayer }
+  ],
   events: [
     {
       http: {
         method: 'post',
         path: note,
-        integration: 'lambda',
+        // integration: 'lambda',
         cors: true,
         request: {
           schema: {
@@ -28,6 +32,9 @@ export const createNote = {
 
 export const getAllNotes = {
   handler: hanlderPath('getAllNotesHandler'),
+  layers: [
+    { Ref: pgLayer }
+  ],
   events: [
     {
       http: {
@@ -44,6 +51,9 @@ export const getAllNotes = {
 
 export const getNoteById = {
   handler: hanlderPath('getNoteByIdHandler'),
+  layers: [
+    { Ref: pgLayer }
+  ],
   events: [
     {
       http: {
@@ -60,6 +70,9 @@ export const getNoteById = {
 
 export const updateNote = {
   handler: hanlderPath('updateNoteHandler'),
+  layers: [
+    { Ref: pgLayer }
+  ],
   events: [
     {
       http: {
@@ -78,6 +91,9 @@ export const updateNote = {
 
 export const deleteNote = {
   handler: hanlderPath('deleteNoteHandler'),
+  layers: [
+    { Ref: pgLayer }
+  ],
   events: [
     {
       http: {
@@ -94,6 +110,9 @@ export const deleteNote = {
 
 export const getNotesByBatchIdAndByWeek = {
   handler: hanlderPath('getNotesByBatchIdAndByWeekHandler'),
+  layers: [
+    { Ref: pgLayer }
+  ],
   events: [
     {
       http: {
@@ -110,6 +129,9 @@ export const getNotesByBatchIdAndByWeek = {
 
 export const getNotesByBatchId = {
   handler: hanlderPath('getNotesByBatchIdHandler'),
+  layers: [
+    { Ref: pgLayer }
+  ],
   events: [
     {
       http: {
@@ -126,6 +148,9 @@ export const getNotesByBatchId = {
 
 export const getNotesByBatchIdAndWeekOverall = {
   handler: hanlderPath('getNotesByBatchIdAndWeekOverallHandler'),
+  layers: [
+    { Ref: pgLayer }
+  ],
   events: [
     {
       http: {
@@ -142,6 +167,9 @@ export const getNotesByBatchIdAndWeekOverall = {
 
 export const getNotesByAssociate = {
   handler: hanlderPath('getNotesByAssociateIdHandler'),
+  layers: [
+    { Ref: pgLayer }
+  ],
   events: [
     {
       http: {

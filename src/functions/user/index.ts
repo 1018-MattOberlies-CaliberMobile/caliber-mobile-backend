@@ -5,10 +5,14 @@ import updateUserSchema from './schemas/updateUserSchema';
 type FunctionHandler = 'getAllUsersHandler' | 'createUserHandler' | 'updateUserHandler' | 'getUserByIdHandler';
 
 const user = 'api/v1/user';
+const pgLayer = 'PostgresLambdaLayer';
 const hanlderPath = (fun: FunctionHandler) => `${handlerPath(__dirname)}/handlers/${fun}.main`;
 
 export const createUser = {
   handler: hanlderPath('createUserHandler'),
+  layers: [
+    { Ref: pgLayer }
+  ],
   events: [
     {
       http: {
@@ -27,6 +31,9 @@ export const createUser = {
 
 export const getAllUsers = {
   handler: hanlderPath('getAllUsersHandler'),
+  layers: [
+    { Ref: pgLayer }
+  ],
   events: [
     {
       http: {
@@ -43,6 +50,9 @@ export const getAllUsers = {
 
 export const getUserById = {
   handler: hanlderPath('getUserByIdHandler'),
+  layers: [
+    { Ref: pgLayer }
+  ],
   events: [
     {
       http: {
@@ -59,6 +69,9 @@ export const getUserById = {
 
 export const updateUser = {
   handler: hanlderPath('updateUserHandler'),
+  layers: [
+    { Ref: pgLayer }
+  ],
   events: [
     {
       http: {
