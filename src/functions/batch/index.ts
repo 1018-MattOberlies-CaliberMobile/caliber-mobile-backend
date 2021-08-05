@@ -117,10 +117,8 @@ export const getBatchByYear = {
       http: {
         method: 'get',
         path: `${batch}/year/{year}`,
+        integration: 'lambda',
         cors: true,
-        request: {
-          schema: null,
-        },
       },
     },
   ],
@@ -136,10 +134,8 @@ export const getBatchYears = {
       http: {
         method: 'get',
         path: `${batch}/year/`,
+        integration: 'lambda',
         cors: true,
-        request: {
-          schema: null,
-        },
       },
     },
   ],
