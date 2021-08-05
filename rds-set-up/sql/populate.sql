@@ -1,8 +1,9 @@
 -- Users
 
 INSERT INTO users ("username", "role", "createdAt", "updatedAt") VALUES 
-  ('64c4e6a7-7f92-4219-a4ec-f66c83e868e8', 'Admin', now(), now()), 
-  ('9c3d552c-2d7d-4c78-b521-dc19fc25e397', 'Trainer', now(), now());
+  ('Admin1', 'Admin', now(), now()), 
+  ('Trainer1', 'Trainer', now(), now()),
+  ('Trainer2', 'Trainer', now(), now());
 
 -- Batch
 INSERT INTO batches ("batchId", "batchTitle", "startDate", "endDate", "createdAt", "updatedAt") VALUES 
@@ -25,5 +26,4 @@ INSERT INTO notes ("noteId", "batchBatchId", "noteContent", "technicalScore", "w
   ('b8210507-3ea8-4fef-a135-7ceaafbba95a', 'd614bac5-681b-47a7-8e8f-98124d9be68c', 'All of them are terrible', '2', 1, NULL, now(), now());
 
 INSERT INTO user_batch ("userUsername", "batchBatchId", "createdAt", "updatedAt") VALUES 
-  ('64c4e6a7-7f92-4219-a4ec-f66c83e868e8', 'd614bac5-681b-47a7-8e8f-98124d9be68c', now(), now()),
-  ('9c3d552c-2d7d-4c78-b521-dc19fc25e397', 'd614bac5-681b-47a7-8e8f-98124d9be68c', now(), now());
+  ('Trainer1', 'd614bac5-681b-47a7-8e8f-98124d9be68c', now(), now());

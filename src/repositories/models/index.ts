@@ -7,7 +7,7 @@ import db from '../config';
 const init = () => {
   const User = db.define('users', {
     username: {
-      type: DataTypes.UUID,
+      type: DataTypes.STRING,
       defaultValue: DataTypes.UUIDV4,
       allowNull: false,
       primaryKey: true,
