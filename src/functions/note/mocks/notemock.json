@@ -2,5 +2,5 @@
   "headers": {
     "Content-Type": "application/json"
   },
-  "body": "{\"noteId\": \"b8210507-3ea8-4fef-a135-7ceaafbba95a\", \"noteContent\": \"Frederic\", \"technicalScore\": 2, \"associate\": {\"associateId\": \"274c3b11-20a7-43be-8fca-fa21f63ff167\", \"firstName\":\"Dustin\", \"lastName\": \"Díaz\"}, \"weekNumber\": 5}"
+  "body": "{\"noteId\": \"b8210507-3ea8-4fef-a135-7ceaafbba95a\", \"batchId\", \"d614bac5-681b-47a7-8e8f-98124d9be68c\" \"noteContent\": \"Frederic\", \"technicalScore\": 2, \"associate\": {\"associateId\": \"274c3b11-20a7-43be-8fca-fa21f63ff167\", \"firstName\":\"Dustin\", \"lastName\": \"Díaz\"}, \"weekNumber\": 5}"
 }

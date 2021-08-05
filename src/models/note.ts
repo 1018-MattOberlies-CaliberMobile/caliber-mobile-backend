@@ -9,6 +9,7 @@ import Associate from './associate';
 
 export default interface Note {
     noteId?: string,
+    batchId: string,
     noteContent: string,
     technicalScore: TechnicalScoreString,
     associate?: Associate,
