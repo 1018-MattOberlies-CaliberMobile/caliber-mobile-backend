@@ -6,25 +6,38 @@ import { middyfy } from '@libs/lambda';
 import db from '../../../repositories/models';
 import Batch from '../../../models/batch';
 import * as AWS from 'aws-sdk';
-import { GetUserResponse } from 'aws-sdk/clients/cognitoidentityserviceprovider';
+import { GetUserRequest, GetUserResponse } from 'aws-sdk/clients/cognitoidentityserviceprovider';
 
 const getBatchByYearHandler: ValidatedEventAPIGatewayProxyEvent<unknown> = async (event) => {
-  const year = event.path.split('/').pop();
-  const AccessToken = event.headers.get['Authorization'].split(' ').pop();
+  const year = event.path['year'];
+  const AccessToken = event.headers['Authorization'].split(' ').pop();
   
   const cognito = new AWS.CognitoIdentityServiceProvider({region: 'us-west-1'});
 
-  cognito.getUser({ AccessToken, }, async (err: AWS.AWSError, res: GetUserResponse) => {
-    if(err) {
-      return formatJSONResponse({ statusCode: 403, body: err.message});
-    }
-    const userRole = res.UserAttributes.find( (attr) => attr.Name === 'custom:role').Value;
-    const username = res.Username;
-    
+  const getCognitoUser = async (AccessToken: GetUserRequest["AccessToken"]): Promise<GetUserResponse> => {
+    return new Promise((resolve, reject) => {
+      cognito.getUser({ AccessToken, }, (err, res) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(res);
+        }
+      });
+    })
+  }
+
+  try {
+    const user = await getCognitoUser(AccessToken);
+
+    const userRole = user.UserAttributes.find( (attr) => attr.Name === 'custom:role').Value;
+    const username = user.Username;
+
     const batches: Batch[] = (await db.Batch.findAll()).map((response) => response.get()); 
-    const returnBatches = [];
+
+    const returnBatches: Batch[] = [];
 
     batches.forEach((batch) => {
+
       if ((userRole === 'Trainer' && batch.trainers.find((trainer) => trainer.username === username))) {
         if(new Date(batch.startDate).getFullYear().toString() === year) {
           returnBatches.push(batch);
@@ -36,17 +49,11 @@ const getBatchByYearHandler: ValidatedEventAPIGatewayProxyEvent<unknown> = async
       }
     });
 
-    return formatJSONResponse({
-      statusCode: 200,
-      body: returnBatches,
-    });
-  
-  });
+    return formatJSONResponse({ batches: returnBatches });
+  } catch (err) {
+    return {statusCode: 500, body: err.message }
+  }
 
-  return formatJSONResponse({
-    statusCode: 500,
-  });
-  
   // This would be better, but it doesnt work :(
   // const res = batches.filter((batch) => {
   //   new Date(batch.startDate).toISOString().split('-').shift() === year;
