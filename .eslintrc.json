@@ -1,7 +1,12 @@
 {
     "env": {
         "es2021": true,
+<<<<<<< HEAD
         "node": true    },
+=======
+        "node": true,
+    },
+>>>>>>> 6c58fd3 (Removed jest/globals and extended jest plugin)
     "extends": [
         "airbnb-base",
         "plugin:jest/recommended"
