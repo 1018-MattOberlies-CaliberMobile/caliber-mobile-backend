@@ -1,21 +1,10 @@
-/* eslint-disable class-methods-use-this */
-// Can eventaully remove above rule
-import Batch from 'src/models/batch';
-import mockBatch from '../../mock-data/batch';
 import db from '../../repositories/models/'
+import CognitoClient from '../../util/cognito';
 
 class BatchDAO {
   constructor(
 
   ){}
-
-  async getBatchById(batchId: string): Promise<unknown> {
-    try {
-      return await db.Batch.findOne({ where: { batchId: batchId } })
-    } catch (err) {
-      throw err;
-    }  
-  }
 
   async getBatchYears(): Promise<string[]> {
     return new Promise<string[]>((resolve) => {
@@ -23,14 +12,37 @@ class BatchDAO {
     });
   }
 
-  async getBatchesByYear(year: string): Promise<Batch[]> {
-    return new Promise<Batch[]>((resolve) => {
-      const batch: Batch = {
-        ...mockBatch,
-        startDate: new Date(`01/01/${year}`).toISOString(),
-      };
-      resolve([batch]);
+  async getBatchesByYear(year: string, token: string) {
+    const user = await CognitoClient.getCognitoUser(token);
+
+    const userRole = user.UserAttributes.find( (attr) => attr.Name === 'custom:role').Value;
+    const username = user.Username;
+
+    const batches = (await db.Batch.findAll({
+      include: {
+        model: db.User,
+        as: 'users',
+      }
+    })).map((response) => response.get()); 
+
+    const returnBatches = [];
+
+    batches.forEach((batch) => {
+
+      if (userRole === 'Trainer') {
+        if (batch.users.find((user) => user.username === username)) {
+          if(new Date(batch.startDate).getFullYear().toString() === year) {
+            returnBatches.push(batch);
+          }
+        }
+      } else {
+        if(new Date(batch.startDate).getFullYear().toString() === year) {
+          returnBatches.push(batch);
+        }
+      }
     });
+
+    return returnBatches;
   }
 }
 
