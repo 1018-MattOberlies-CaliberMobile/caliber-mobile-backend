@@ -1,20 +1,11 @@
-FROM node:lts-alpine
+FROM node:lts-slim AS builder
+
+WORKDIR /app
 
 COPY . .
 # In conjunction with the .dockerignore file
 # This will only copy the files that we want
 # And node_modules, build, log, etc will be ignored
-
-RUN npm install
-
-RUN npm run tsc
-
-EXPOSE 4000
-
-# Every Image must have a CMD or ENTRYPOINT instruction
-# This instruction tells the container what process will be
-# associated with the lifetime of the container
-# They do basically the same thing
-# But ENTRYPOINT is preferred if you are associating
-# the process with a specific file
-ENTRYPOINT ["node", "lib/src/functions/index.js"]
+RUN npm i -g serverless
+RUN npm ci
+RUN AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY sls deploy
