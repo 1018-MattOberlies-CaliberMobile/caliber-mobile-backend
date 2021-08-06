@@ -6,7 +6,6 @@ COPY . .
 # In conjunction with the .dockerignore file
 # This will only copy the files that we want
 # And node_modules, build, log, etc will be ignored
-RUN npm i -g serverless
 RUN npm ci
 
 ENTRYPOINT sls deploy

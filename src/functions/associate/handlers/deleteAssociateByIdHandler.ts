@@ -7,7 +7,7 @@ import { middyfy } from '@libs/lambda';
 const deleteAssociateHandler: ValidatedEventAPIGatewayProxyEvent<unknown> = async (event) => {
   console.log('filler');
   return formatJSONResponse({
-    message: 'Hello delete, welcome to the exciting Serverless world!',
+    message: 'Donovan was here!!!',
     event,
   });
 };
