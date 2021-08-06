@@ -79,7 +79,6 @@ const serverlessConfiguration: AWS = {
       external: [
         'aws-sdk',
         'pg',
-        'pg-types',
       ],
       watch: {
         pattern: ['src/**/*'],
