@@ -3,67 +3,19 @@ import 'source-map-support/register';
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
 import { formatJSONResponse } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
-import db from '../../../repositories/models';
-import * as AWS from 'aws-sdk';
-import { GetUserRequest, GetUserResponse } from 'aws-sdk/clients/cognitoidentityserviceprovider';
+import batchDAO from '../../../repositories/batchDAO/batch.dao';
+
 
 const getBatchByYearHandler: ValidatedEventAPIGatewayProxyEvent<unknown> = async (event) => {
   const year = event.path['year'];
-  const AccessToken = event.headers['Authorization'].split(' ').pop();
-  
-  const cognito = new AWS.CognitoIdentityServiceProvider({region: 'us-west-1'});
-
-  const getCognitoUser = async (AccessToken: GetUserRequest["AccessToken"]): Promise<GetUserResponse> => {
-    return new Promise((resolve, reject) => {
-      cognito.getUser({ AccessToken, }, (err, res) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(res);
-        }
-      });
-    })
-  }
+  const accessToken = event.headers['Authorization'].split(' ').pop();
 
   try {
-    const user = await getCognitoUser(AccessToken);
-
-    const userRole = user.UserAttributes.find( (attr) => attr.Name === 'custom:role').Value;
-    const username = user.Username;
-
-    const batches = (await db.Batch.findAll({
-      include: {
-        model: db.User,
-        as: 'users',
-      }
-    })).map((response) => response.get()); 
-
-    const returnBatches = [];
-
-    batches.forEach((batch) => {
-
-      if (userRole === 'Trainer') {
-        if (batch.users.find((user) => user.username === username)) {
-          if(new Date(batch.startDate).getFullYear().toString() === year) {
-            returnBatches.push(batch);
-          }
-        }
-      } else {
-        if(new Date(batch.startDate).getFullYear().toString() === year) {
-          returnBatches.push(batch);
-        }
-      }
-    });
-
-    return formatJSONResponse({ batches: returnBatches });
+    const batches = await batchDAO.getBatchesByYear(year, accessToken);
+    return formatJSONResponse({ batches, });
   } catch (err) {
     return {statusCode: 500, body: err.message }
   }
-
-  // This would be better, but it doesnt work :(
-  // const res = batches.filter((batch) => {
-  //   new Date(batch.startDate).toISOString().split('-').shift() === year;
-  // });
   
 };
 
