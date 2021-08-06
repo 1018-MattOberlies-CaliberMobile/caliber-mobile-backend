@@ -5,8 +5,11 @@ FROM node:lts-slim AS builder
 WORKDIR /app
 >>>>>>> e3dcfdc (debugging eslint)
 
+<<<<<<< HEAD
 WORKDIR /app
 
+=======
+>>>>>>> 2031244 (Installed eslint jest plugin)
 COPY . .;
 # In conjunction with the .dockerignore file
 # This will only copy the files that we want
