@@ -7,7 +7,8 @@ import { middyfy } from '@libs/lambda';
 
 // eslint-disable-next-line max-len
 const getNotesByBatchIdAndWeekHandler: ValidatedEventAPIGatewayProxyEvent<unknown> = async (event) => {
-  const { batchId, week } = event.pathParameters;
+  const batchId = ((event.path).split('/'))[5];
+  const week = ((event.path).split('/'))[6];
   const data = await NoteDAO.getNotesByBatchAndWeek(batchId, Number(week));
 
   return formatJSONResponse({

@@ -1,7 +1,4 @@
 {
     "httpMethod": "GET",
-    "pathParameters": {
-        "batchId": "d614bac5-681b-47a7-8e8f-98124d9be68c",
-        "week": "1"
-    }
+    "path": "/api/v1/note/batch/d614bac5-681b-47a7-8e8f-98124d9be68c/1"
 }
