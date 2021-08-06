@@ -10,7 +10,8 @@
     "db:populate": "ts-node rds-set-up/populate.ts",
     "db:reset": "npm run db:drop && npm run db:create",
     "sls:info": "sls info --verbose | tee ./.slsinfo",
-    "sls:deploy": "sls deploy && npm run sls:info"
+    "sls:deploy": "sls deploy && npm run sls:info",
+    "lint:fix": "eslint --fix --no-error-on-unmatched-pattern ./src"
   },
   "engines": {
     "node": ">=14.15.0"
