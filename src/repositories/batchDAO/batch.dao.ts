@@ -7,12 +7,17 @@ class BatchDAO {
   ){}
 
   async getBatchYears(): Promise<string[]> {
-    return new Promise<string[]>((resolve) => {
-      resolve(['2021', '2020']);
+    const years: string[] = (await db.Batch.findAll({
+      attributes: ['startDate'],
+    })).map((response) => {
+      const date = response.getDataValue('startDate');
+      return new Date(date).getFullYear().toString();
     });
+
+    return [...new Set(years)];
   }
 
-  async getBatchesByYear(year: string, token: string) {
+  async getBatchesByYear(year: string, token: string): Promise<any[]> {
     const user = await CognitoClient.getCognitoUser(token);
 
     const userRole = user.UserAttributes.find( (attr) => attr.Name === 'custom:role').Value;
