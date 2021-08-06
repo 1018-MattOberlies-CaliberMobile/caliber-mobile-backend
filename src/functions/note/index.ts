@@ -112,7 +112,7 @@ export const getNotesByBatchIdAndByWeek = {
         method: 'get',
         path: `${note}/batch/{batchId}/{week}`,
         cors: true,
-        integration: 'lambda',
+        // integration: 'lambda',
       },
     },
   ],

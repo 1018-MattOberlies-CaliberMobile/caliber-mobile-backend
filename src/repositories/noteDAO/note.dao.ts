@@ -18,7 +18,7 @@ class NoteDAO {
     try {
       return await db.Note.findAll({
         where: {
-          batchId,
+          batchBatchId: batchId,
           weekNumber
         }  
       })
