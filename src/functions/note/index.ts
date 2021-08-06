@@ -40,7 +40,11 @@ export const updateNote = {
         path: note,
         cors: true,
         request: {
+<<<<<<< HEAD
           schemas: {
+=======
+          schema: {
+>>>>>>> f3383ae (refactored backend, and removed useless handlers)
             'application/json': createNoteSchema,
           },
         },
