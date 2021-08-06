@@ -1,4 +1,9 @@
 FROM node:lts-slim AS builder
+<<<<<<< HEAD
+=======
+
+WORKDIR /app
+>>>>>>> e3dcfdc (debugging eslint)
 
 WORKDIR /app
 
