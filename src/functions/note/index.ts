@@ -1,4 +1,4 @@
-import { handlerPath } from '@libs/handlerResolver';
+import { handlerPath as pathMaker } from '@libs/handlerResolver';
 import createNoteSchema from './schemas/createNoteSchema';
 import updateNoteSchema from './schemas/updateNoteSchema';
 
@@ -6,10 +6,10 @@ type FunctionHandler = 'createNoteHandler' | 'getAllNotesHandler' | 'getNoteById
 
 const note = 'api/v1/note';
 const pgLayer = 'PostgresLambdaLayer';
-const hanlderPath = (fun: FunctionHandler) => `${handlerPath(__dirname)}/handlers/${fun}.main`;
+const handlerPath = (fun: FunctionHandler) => `${pathMaker(__dirname)}/handlers/${fun}.main`;
 
 export const createNote = {
-  handler: hanlderPath('createNoteHandler'),
+  handler: handlerPath('createNoteHandler'),
   layers: [
     { Ref: pgLayer }
   ],
@@ -30,7 +30,7 @@ export const createNote = {
 };
 
 export const getAllNotes = {
-  handler: hanlderPath('getAllNotesHandler'),
+  handler: handlerPath('getAllNotesHandler'),
   layers: [
     { Ref: pgLayer }
   ],
@@ -47,7 +47,7 @@ export const getAllNotes = {
 };
 
 export const getNoteById = {
-  handler: hanlderPath('getNoteByIdHandler'),
+  handler: handlerPath('getNoteByIdHandler'),
   layers: [
     { Ref: pgLayer }
   ],
@@ -64,7 +64,7 @@ export const getNoteById = {
 };
 
 export const updateNote = {
-  handler: hanlderPath('createNoteHandler'),
+  handler: handlerPath('createNoteHandler'),
   layers: [
     { Ref: pgLayer }
   ],
@@ -85,7 +85,7 @@ export const updateNote = {
 };
 
 export const deleteNote = {
-  handler: hanlderPath('deleteNoteHandler'),
+  handler: handlerPath('deleteNoteHandler'),
   layers: [
     { Ref: pgLayer }
   ],
@@ -102,7 +102,7 @@ export const deleteNote = {
 };
 
 export const getNotesByBatchIdAndByWeek = {
-  handler: hanlderPath('getNotesByBatchIdAndByWeekHandler'),
+  handler: handlerPath('getNotesByBatchIdAndByWeekHandler'),
   layers: [
     { Ref: pgLayer }
   ],
@@ -119,7 +119,7 @@ export const getNotesByBatchIdAndByWeek = {
 };
 
 export const getNotesByBatchId = {
-  handler: hanlderPath('getNotesByBatchIdHandler'),
+  handler: handlerPath('getNotesByBatchIdHandler'),
   layers: [
     { Ref: pgLayer }
   ],
@@ -136,7 +136,7 @@ export const getNotesByBatchId = {
 };
 
 export const getNotesByBatchIdAndWeekOverall = {
-  handler: hanlderPath('getNotesByBatchIdAndWeekOverallHandler'),
+  handler: handlerPath('getNotesByBatchIdAndWeekOverallHandler'),
   layers: [
     { Ref: pgLayer }
   ],
@@ -153,7 +153,7 @@ export const getNotesByBatchIdAndWeekOverall = {
 };
 
 export const getNotesByAssociate = {
-  handler: hanlderPath('getNotesByAssociateIdHandler'),
+  handler: handlerPath('getNotesByAssociateIdHandler'),
   layers: [
     { Ref: pgLayer }
   ],

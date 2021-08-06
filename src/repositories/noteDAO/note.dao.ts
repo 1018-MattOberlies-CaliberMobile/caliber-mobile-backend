@@ -1,7 +1,7 @@
 import db from '../../repositories/models'
 
 
-export type DBNote= {
+export type DBNote = {
   note_id: string,
   note_content: string,
   technical_score: 0 | 1 | 2 | 3 | 4,
@@ -14,13 +14,13 @@ class NoteDAO {
   constructor() {
   };
 
-  public async getNotesByBatchAndWeek(batchId: string, weekNumber: number): Promise<unknown> {
+  public async getNotesByBatchAndWeek(batchBatchId: string, weekNumber: number): Promise<unknown> {
     try {
       return await db.Note.findAll({
         where: {
-          batchId,
+          batchBatchId,
           weekNumber
-        }  
+        }
       })
     } catch (err) {
       throw err;
