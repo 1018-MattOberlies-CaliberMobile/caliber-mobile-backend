@@ -9,7 +9,6 @@
     "db:drop": "ts-node rds-set-up/drop.ts",
     "db:populate": "ts-node rds-set-up/populate.ts",
     "db:reset": "npm run db:drop && npm run db:create",
-    "sls:deploy": "AWS_PROFILE=sls-caliber-2 sls deploy",
     "lint:fix": "eslint --fix --no-error-on-unmatched-pattern ./src"
   },
   "engines": {

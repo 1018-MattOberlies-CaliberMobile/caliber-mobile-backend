@@ -1,31 +1,21 @@
-import db from '../../repositories/models'
-
-
-export type DBNote= {
-  note_id: string,
-  note_content: string,
-  technical_score: 0 | 1 | 2 | 3 | 4,
-  week_number: number,
-  batch_id: string,
-  associate_id: string
-}
+/* eslint-disable class-methods-use-this */
+import db from '../../repositories/models';
 
 class NoteDAO {
-  constructor() {
-  };
+  constructor() { }
 
   public async getNotesByBatchAndWeek(batchId: string, weekNumber: number): Promise<unknown> {
     try {
       return await db.Note.findAll({
         where: {
-          batchId,
-          weekNumber
-        }  
-      })
+          batchBatchId: batchId,
+          weekNumber,
+        },
+      });
     } catch (err) {
-      throw err;
+      console.error(err);
     }
-  };
+  }
 }
 
 export default new NoteDAO();
