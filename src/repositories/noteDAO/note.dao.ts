@@ -1,10 +1,10 @@
-/* eslint-disable class-methods-use-this */
+import { Model } from 'sequelize/types';
 import db from '../../repositories/models';
 
 class NoteDAO {
-  constructor() { }
-
-  public async getNotesByBatchAndWeek(batchId: string, weekNumber: number): Promise<unknown> {
+  public static async getNotesByBatchAndWeek(
+    batchId: string, weekNumber: number,
+  ): Promise<Model<any, any>[] | null> {
     try {
       return await db.Note.findAll({
         where: {
@@ -15,7 +15,8 @@ class NoteDAO {
     } catch (err) {
       console.error(err);
     }
+    return null;
   }
 }
 
-export default new NoteDAO();
+export default NoteDAO;

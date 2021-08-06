@@ -11,11 +11,10 @@ import NoteDAO from '../../../repositories/noteDAO/note.dao';
 const getNotesByBatchIdAndWeekHandler: ValidatedEventAPIGatewayProxyEvent<unknown> = async (event) => {
   const batchId = event.path['batchId'];
   const week = event.path['week'];
-  const data = await NoteDAO.getNotesByBatchAndWeek(batchId, Number(week));
+  const notes = await NoteDAO.getNotesByBatchAndWeek(batchId, Number(week));
 
   return formatJSONResponse({
-    message: data,
-    event,
+    notes,
   });
 };
 
