@@ -56,7 +56,7 @@ const {
 } = process.env;
 
 if (!(
-  DB_NAME || DB_ALLOCATED_STORAGE || DB_INSTANCE_CLASS || DB_ENGINE_VERSION || DB_ENGINE || 
+  DB_NAME || DB_ALLOCATED_STORAGE || DB_INSTANCE_CLASS || DB_ENGINE_VERSION || DB_ENGINE ||
   DB_USERNAME || DB_PASSWORD
 )) {
   console.error('Please provide all the environment variables in the .env file');
@@ -78,7 +78,7 @@ const serverlessConfiguration: AWS = {
       sourcemap: true,
       external: [
         'aws-sdk',
-        'pg'
+        'pg',
       ],
       watch: {
         pattern: ['src/**/*'],
@@ -90,7 +90,6 @@ const serverlessConfiguration: AWS = {
   provider: {
     name: 'aws',
     region: 'us-east-1',
-    // profile: 'sls-caliber-2',
     runtime: 'nodejs14.x',
     apiGateway: {
       minimumCompressionSize: 1024,
