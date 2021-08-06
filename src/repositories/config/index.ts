@@ -42,4 +42,3 @@ const init = (): Sequelize => {
 };
 
 export default init();
-

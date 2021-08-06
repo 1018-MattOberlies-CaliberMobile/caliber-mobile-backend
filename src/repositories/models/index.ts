@@ -1,4 +1,6 @@
-import { DataTypes, Model, ModelAttributeColumnOptions } from 'sequelize';
+/* eslint-disable dot-notation */
+/* eslint-disable no-param-reassign */
+import { DataTypes } from 'sequelize';
 import { v4 as uuid } from 'uuid';
 
 import { Role, TechnicalScoreString } from 'src/@types';
@@ -75,10 +77,9 @@ const init = () => {
     },
   });
 
-
   // 1:M
   Batch.hasMany(Note);
-  
+
   // 1:1
   Note.belongsTo(Associate);
 
@@ -100,8 +101,8 @@ const init = () => {
     user['username'] = uuid();
   });
 
-  Note.beforeCreate((batch) => {
-    batch['noteId'] = uuid();
+  Note.beforeCreate((note) => {
+    note['noteId'] = uuid();
   });
 
   Batch.beforeCreate((batch) => {
