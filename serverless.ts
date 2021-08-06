@@ -4,39 +4,18 @@ import type { AWS } from '@serverless/typescript';
 
 import {
   createNote,
-  getAllNotes,
-  getNoteById,
   updateNote,
-  deleteNote,
   getNotesByBatchIdAndByWeek,
-  getNotesByBatchId,
   getNotesByBatchIdAndWeekOverall,
-  getNotesByAssociate,
 } from '@functions/note';
 
 import {
-  createAssociate,
-  deleteAssociateById,
-  getAllAssociate,
-  getAssociateByBatchId,
-  getAssociateById,
-  updateAssociate,
-} from '@functions/associate';
-
-import {
-  getAllBatches,
-  createBatch,
-  updateBatch,
-  getBatchById,
-  deleteBatchById,
   getBatchByYear,
   getBatchYears,
 } from '@functions/batch';
 
 import {
   getAllUsers,
-  createUser,
-  updateUser,
   getUserById,
 } from '@functions/user';
 
@@ -53,6 +32,7 @@ const {
   DB_HOST,
   DB_DELETE_AUTO_BACKUP,
   DB_BACKUP_RETENTION_POLICY,
+  COGNITO_REGION,
 } = process.env;
 
 if (!(
@@ -105,6 +85,7 @@ const serverlessConfiguration: AWS = {
       DATABASE_USERNAME: DB_USERNAME,
       DATABASE_PASSWORD: DB_PASSWORD,
       DATABASE_HOST: DB_HOST,
+      COGNITO_REGION,
     },
     lambdaHashingVersion: '20201221',
     stackTags: {
@@ -130,33 +111,14 @@ const serverlessConfiguration: AWS = {
 
   functions: {
     createNote,
-    getAllNotes,
-    getNoteById,
     updateNote,
-    deleteNote,
     getNotesByBatchIdAndByWeek,
-    getNotesByBatchId,
     getNotesByBatchIdAndWeekOverall,
-    getNotesByAssociate,
 
-    createAssociate,
-    getAllAssociate,
-    getAssociateById,
-    deleteAssociateById,
-    updateAssociate,
-    getAssociateByBatchId,
-
-    getAllBatches,
-    createBatch,
-    updateBatch,
-    getBatchById,
-    deleteBatchById,
     getBatchByYear,
     getBatchYears,
 
     getAllUsers,
-    createUser,
-    updateUser,
     getUserById,
   },
 

@@ -11,7 +11,8 @@ describe('batch DAO', () => {
   describe('getBatchesByYear', () => {
     test('returns a list of batches for the specified year', async () => {
       const year = Math.floor(Math.random() * 1000).toString();
-      const batchList = await BatchDAO.getBatchesByYear(year);
+      // TODO: Mock cognito
+      const batchList = await BatchDAO.getBatchesByYear(year, '');
       const returnedYear = batchList[0].startDate.split('-').shift();
       expect(Number(returnedYear)).toEqual(Number(year));
     });

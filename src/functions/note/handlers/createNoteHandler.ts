@@ -3,14 +3,16 @@ import 'source-map-support/register';
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
 import { formatJSONResponse } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
-import Models from '../../../repositories/models';
-import schema from '../schemas/createNoteSchema';
 import Note from 'src/models/note';
 import { TechnicalScoreString } from 'src/@types';
 import Associate from 'src/models/associate';
+import schema from '../schemas/createNoteSchema';
+import Models from '../../../repositories/models';
 
 const createNoteHandler: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
-  const { noteId, noteContent, technicalScore, weekNumber, associate, batchId } = event.body
+  const {
+    noteId, noteContent, technicalScore, weekNumber, associate, batchId,
+  } = event.body;
   const temp: Note = {
     batchId,
     noteContent,
@@ -25,15 +27,15 @@ const createNoteHandler: ValidatedEventAPIGatewayProxyEvent<typeof schema> = asy
   if (temp.associate?.associateId) {
     extra = {
       associateAssociateId: temp.associate.associateId,
-    }
-  };
-  let status;
+    };
+  }
+  let cuNote;
   if (note) {
-    status = await Models.Note.update(temp, {
-      where: { noteId }
+    cuNote = await Models.Note.update(temp, {
+      where: { noteId },
     });
   } else {
-    status = await Models.Note.create({
+    cuNote = await Models.Note.create({
       ...temp,
       ...extra,
       batchBatchId: temp.batchId,
@@ -41,7 +43,7 @@ const createNoteHandler: ValidatedEventAPIGatewayProxyEvent<typeof schema> = asy
   }
 
   return formatJSONResponse({
-    message: status,
+    note: cuNote,
   });
 };
 
