@@ -8,4 +8,5 @@ COPY . .
 # And node_modules, build, log, etc will be ignored
 RUN npm i -g serverless
 RUN npm ci
-RUN AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY sls deploy
+
+ENTRYPOINT sls deploy
