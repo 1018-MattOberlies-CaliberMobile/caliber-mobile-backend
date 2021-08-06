@@ -56,8 +56,8 @@ const {
 } = process.env;
 
 if (!(
-  DB_NAME || DB_ALLOCATED_STORAGE || DB_INSTANCE_CLASS || DB_ENGINE_VERSION || DB_ENGINE ||
-  DB_USERNAME || DB_PASSWORD
+  DB_NAME || DB_ALLOCATED_STORAGE || DB_INSTANCE_CLASS || DB_ENGINE_VERSION || DB_ENGINE
+  || DB_USERNAME || DB_PASSWORD
 )) {
   console.error('Please provide all the environment variables in the .env file');
   process.exit(-1);
@@ -79,6 +79,7 @@ const serverlessConfiguration: AWS = {
       external: [
         'aws-sdk',
         'pg',
+        'pg-types',
       ],
       watch: {
         pattern: ['src/**/*'],
