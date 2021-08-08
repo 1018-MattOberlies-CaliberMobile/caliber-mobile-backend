@@ -67,7 +67,7 @@
   "description": "Serverless aws-nodejs-typescript template",
   "main": "serverless.ts",
   "scripts": {
-    "test": "jest",
+    "test": "sh test.sh",
     "db:create": "ts-node rds-set-up/create.ts",
     "db:drop": "ts-node rds-set-up/drop.ts",
     "db:populate": "ts-node rds-set-up/populate.ts",
