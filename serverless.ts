@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import * as dotenv from 'dotenv';
 import type { AWS } from '@serverless/typescript';
+import ignorePlugin from 'esbuild-plugin-ignore'
 
 import {
   createNote,
@@ -51,6 +52,7 @@ const serverlessConfiguration: AWS = {
   package: {
     individually: true,
   },
+
   custom: {
     esbuild: {
       bundle: true,
@@ -68,9 +70,15 @@ const serverlessConfiguration: AWS = {
         pattern: ['src/**/*'],
         ignore: ['.serverless/**/*', '.build', 'node_modules', '.esbuild'],
       },
-    },
+      plugins: [ ignorePlugin([
+        {
+          resourceRegExp: /pg-native$/,
+        }
+      ])]
+    
   },
-  plugins: ['serverless-esbuild', 'serverless-plugin-resource-tagging'],
+},
+  plugins: ['serverless-esbuild', 'serverless-plugin-resource-tagging','serverless-offline','esbuild-plugin-ignore'],
   provider: {
     name: 'aws',
     region: 'us-east-1',
