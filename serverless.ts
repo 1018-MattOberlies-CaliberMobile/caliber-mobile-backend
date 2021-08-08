@@ -58,10 +58,10 @@ const serverlessConfiguration: AWS = {
       sourcemap: true,
       external: [
         'aws-sdk',
-        'pg',
-        'pg-types',
-        'postgres-array',
-        'postgres-date',
+        // 'pg',
+        // 'pg-types',
+        // 'postgres-array',
+        // 'postgres-date',
       ],
       watch: {
         pattern: ['src/**/*'],
