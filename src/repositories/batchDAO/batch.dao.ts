@@ -26,7 +26,7 @@ class BatchDAO {
         model: db.User,
         as: 'users',
       },
-    })).map((response) => response.get());
+    })).map((response) => JSON.parse(JSON.stringify(response)));
 
     const returnBatches = [];
 
