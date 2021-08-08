@@ -40,6 +40,11 @@ describe('batch DAO', () => {
       });
 
 
+      const year = Math.floor(Math.random() * 1000).toString();
+      // TODO: Mock cognito
+      const batchList = await BatchDAO.getBatchesByYear(year, '');
+      const returnedYear = batchList[0].startDate.split('-').shift();
+      expect(Number(returnedYear)).toEqual(Number(year));
     });
   });
 });
