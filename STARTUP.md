@@ -1,11 +1,12 @@
 
 Install serverless
 ```
+please
 ```
 
 Set-up the aws profile
 ```
-aws configure --profile sls-caliber
+aws configure --profile sls-caliber-2
 ```
 
 Clone the repo

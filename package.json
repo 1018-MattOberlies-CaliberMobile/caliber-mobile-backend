@@ -4,13 +4,13 @@
   "description": "Serverless aws-nodejs-typescript template",
   "main": "serverless.ts",
   "scripts": {
-    "test": "jest",
+    "test": "sh test.sh",
+    "test:file": "sh testfile.sh",
     "db:create": "ts-node rds-set-up/create.ts",
     "db:drop": "ts-node rds-set-up/drop.ts",
     "db:populate": "ts-node rds-set-up/populate.ts",
     "db:reset": "npm run db:drop && npm run db:create",
-    "sls:info": "sls info --verbose | tee ./.slsinfo",
-    "sls:deploy": "sls deploy && npm run sls:info"
+    "lint:fix": "eslint --fix --no-error-on-unmatched-pattern ./src"
   },
   "engines": {
     "node": ">=14.15.0"
@@ -38,6 +38,7 @@
     "eslint": "^7.31.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jest": "^24.4.0",
     "fs": "0.0.1-security",
     "jest": "^27.0.6",
     "json-schema-to-ts": "^1.5.0",

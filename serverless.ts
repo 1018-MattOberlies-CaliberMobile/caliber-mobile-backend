@@ -4,39 +4,18 @@ import type { AWS } from '@serverless/typescript';
 
 import {
   createNote,
-  getAllNotes,
-  getNoteById,
   updateNote,
-  deleteNote,
   getNotesByBatchIdAndByWeek,
-  getNotesByBatchId,
   getNotesByBatchIdAndWeekOverall,
-  getNotesByAssociate,
 } from '@functions/note';
 
 import {
-  createAssociate,
-  deleteAssociateById,
-  getAllAssociate,
-  getAssociateByBatchId,
-  getAssociateById,
-  updateAssociate,
-} from '@functions/associate';
-
-import {
-  getAllBatches,
-  createBatch,
-  updateBatch,
-  getBatchById,
-  deleteBatchById,
   getBatchByYear,
   getBatchYears,
 } from '@functions/batch';
 
 import {
   getAllUsers,
-  createUser,
-  updateUser,
   getUserById,
 } from '@functions/user';
 
@@ -53,10 +32,12 @@ const {
   DB_HOST,
   DB_DELETE_AUTO_BACKUP,
   DB_BACKUP_RETENTION_POLICY,
+  COGNITO_REGION,
 } = process.env;
 
 if (!(
-  DB_NAME || DB_ALLOCATED_STORAGE || DB_INSTANCE_CLASS || DB_ENGINE_VERSION || DB_ENGINE || DB_USERNAME || DB_PASSWORD
+  DB_NAME || DB_ALLOCATED_STORAGE || DB_INSTANCE_CLASS || DB_ENGINE_VERSION || DB_ENGINE
+  || DB_USERNAME || DB_PASSWORD
 )) {
   console.error('Please provide all the environment variables in the .env file');
   process.exit(-1);
@@ -77,7 +58,10 @@ const serverlessConfiguration: AWS = {
       sourcemap: true,
       external: [
         'aws-sdk',
-        'pg'
+        'pg',
+        'pg-types',
+        'postgres-array',
+        'postgres-date',
       ],
       watch: {
         pattern: ['src/**/*'],
@@ -89,7 +73,6 @@ const serverlessConfiguration: AWS = {
   provider: {
     name: 'aws',
     region: 'us-east-1',
-    profile: 'sls-caliber-2',
     runtime: 'nodejs14.x',
     apiGateway: {
       minimumCompressionSize: 1024,
@@ -102,6 +85,7 @@ const serverlessConfiguration: AWS = {
       DATABASE_USERNAME: DB_USERNAME,
       DATABASE_PASSWORD: DB_PASSWORD,
       DATABASE_HOST: DB_HOST,
+      COGNITO_REGION,
     },
     lambdaHashingVersion: '20201221',
     stackTags: {
@@ -127,33 +111,14 @@ const serverlessConfiguration: AWS = {
 
   functions: {
     createNote,
-    getAllNotes,
-    getNoteById,
     updateNote,
-    deleteNote,
     getNotesByBatchIdAndByWeek,
-    getNotesByBatchId,
     getNotesByBatchIdAndWeekOverall,
-    getNotesByAssociate,
 
-    createAssociate,
-    getAllAssociate,
-    getAssociateById,
-    deleteAssociateById,
-    updateAssociate,
-    getAssociateByBatchId,
-
-    getAllBatches,
-    createBatch,
-    updateBatch,
-    getBatchById,
-    deleteBatchById,
     getBatchByYear,
     getBatchYears,
 
     getAllUsers,
-    createUser,
-    updateUser,
     getUserById,
   },
 

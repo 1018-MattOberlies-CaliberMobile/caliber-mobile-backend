@@ -1,31 +1,22 @@
-import db from '../../repositories/models'
-
-
-export type DBNote= {
-  note_id: string,
-  note_content: string,
-  technical_score: 0 | 1 | 2 | 3 | 4,
-  week_number: number,
-  batch_id: string,
-  associate_id: string
-}
+import { Model } from 'sequelize/types';
+import db from '../../repositories/models';
 
 class NoteDAO {
-  constructor() {
-  };
-
-  public async getNotesByBatchAndWeek(batchId: string, weekNumber: number): Promise<unknown> {
+  public static async getNotesByBatchAndWeek(
+    batchId: string, weekNumber: number,
+  ): Promise<Model<any, any>[] | null> {
     try {
       return await db.Note.findAll({
         where: {
-          batchId,
-          weekNumber
-        }  
-      })
+          batchBatchId: batchId,
+          weekNumber,
+        },
+      });
     } catch (err) {
-      throw err;
+      console.error(err);
     }
-  };
+    return null;
+  }
 }
 
-export default new NoteDAO();
+export default NoteDAO;

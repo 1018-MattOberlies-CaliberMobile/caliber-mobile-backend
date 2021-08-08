@@ -6,6 +6,7 @@ const {
   DATABASE_USERNAME,
   DATABASE_PASSWORD,
   DATABASE_HOST,
+  TESTING,
 } = process.env;
 
 const supported = ['mysql', 'postgres', 'sqlite', 'mariadb', 'mssql'];
@@ -26,20 +27,22 @@ export const options: Options = {
     idle: 200,
   },
   dialectModule: pg,
+  logging: TESTING ? (...msg) => msg : console.log,
 };
 
 const init = (): Sequelize => {
-  const db = new Sequelize(options);
-  db.authenticate().then(() => console.log('connected to database')).catch(console.error);
+  let db = new Sequelize(options);
+  db.authenticate().then(() => {
+    if (!TESTING) {
+      console.log('connected to db');
+    }
+  }).catch(console.error);
   db.sync({ force: false }).then((syncedDB) => {
-    console.log('>> sync db');
-    return syncedDB;
+    db = syncedDB;
   }).catch((err) => {
     console.error(err);
   });
-  console.log('>> not sync');
   return db;
 };
 
 export default init();
-
