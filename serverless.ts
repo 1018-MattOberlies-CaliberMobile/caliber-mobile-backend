@@ -58,6 +58,7 @@ const serverlessConfiguration: AWS = {
       sourcemap: true,
       external: [
         'aws-sdk',
+        'pg-native',
         // 'pg',
         // 'pg-types',
         // 'postgres-array',
