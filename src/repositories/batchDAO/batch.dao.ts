@@ -4,10 +4,11 @@ import CognitoClient from '../../util/cognito';
 
 class BatchDAO {
   static async getBatchYears(): Promise<string[]> {
-    const years: string[] = (await db.Batch.findAll({
+    const years = (await db.Batch.findAll({
       attributes: ['startDate'],
     })).map((response) => {
-      const date = response.getDataValue('startDate');
+      const res = JSON.parse(JSON.stringify(response));
+      const date = res.startDate;
       return new Date(date).getFullYear().toString();
     });
 
@@ -25,7 +26,7 @@ class BatchDAO {
         model: db.User,
         as: 'users',
       },
-    })).map((response) => response.get());
+    })).map((response) => JSON.parse(JSON.stringify(response)));
 
     const returnBatches = [];
 
