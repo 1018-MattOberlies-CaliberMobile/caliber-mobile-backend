@@ -123,7 +123,7 @@ const serverlessConfiguration: AWS = {
     postgres: {
       // path: './layer-dir',
       package: {
-        artifact: './layer-dir/layer-dir.zip',
+        artifact: './layer-dir/postgres.zip',
       },
       description: 'PostgreSQL layer',
       compatibleRuntimes: [
