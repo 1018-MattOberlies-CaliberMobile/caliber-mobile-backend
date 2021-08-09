@@ -124,8 +124,6 @@ const serverlessConfiguration: AWS = {
       path: './layer-dir',
       description: 'PostgreSQL layer',
       compatibleRuntimes: [
-        'nodejs10.x',
-        'nodejs12.x',
         'nodejs14.x',
       ],
       allowedAccounts: [
