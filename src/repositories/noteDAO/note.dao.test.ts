@@ -10,7 +10,6 @@ describe('note DAO', () => {
       console.log(noteList);
       const returnedWeek = noteList[0]['weekNumber'];
       expect(returnedWeek).toEqual(weekNumber);
-      
     });
     test('returns null with invalid data', async () => {
       const batchId = '123-456-789';

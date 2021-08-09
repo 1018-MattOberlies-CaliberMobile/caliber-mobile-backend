@@ -1,17 +1,15 @@
 /* eslint-disable no-undef */
+import { Model } from 'sequelize/types';
 import BatchDAO from './batch.dao';
 import CognitoClient from '../../util/cognito';
 import db from '../models';
-import { Model } from 'sequelize/types';
-
 
 describe('batch DAO', () => {
-
   describe('getBatchYears', () => {
     test('returns a list of batch years', async () => {
       jest.spyOn(db.Batch, 'findAll').mockResolvedValueOnce([
-        { startDate: '2021-03-08T00:00:02.000Z'},
-        { startDate: '2020-05-24T04:00:00.000Z'}
+        { startDate: '2021-03-08T00:00:02.000Z' },
+        { startDate: '2020-05-24T04:00:00.000Z' },
       ] as unknown as Model<any, any>[]);
 
       await expect(BatchDAO.getBatchYears()).resolves.toEqual(['2021', '2020']);
@@ -19,17 +17,16 @@ describe('batch DAO', () => {
 
     test('if two or more batches are in the same year, the year only returns once', async () => {
       jest.spyOn(db.Batch, 'findAll').mockResolvedValueOnce([
-        { startDate: '2021-03-08T00:00:02.000Z'},
-        { startDate: '2021-03-08T00:00:02.000Z'},
-        { startDate: '2020-05-24T04:00:00.000Z'}
+        { startDate: '2021-03-08T00:00:02.000Z' },
+        { startDate: '2021-03-08T00:00:02.000Z' },
+        { startDate: '2020-05-24T04:00:00.000Z' },
       ] as unknown as Model<any, any>[]);
 
       await expect(BatchDAO.getBatchYears()).resolves.toEqual(['2021', '2020']);
-    })
+    });
   });
 
   describe('getBatchesByYear', () => {
-
     const batch1 = {
       batchId: 'd614bac5-681b-47a7-8e8f-98124d9be68c',
       batchTitle: 'Where the streets have not name',
@@ -43,8 +40,8 @@ describe('batch DAO', () => {
           role: 'Trainer',
           createdAt: '2021-08-06T21:59:31.595Z',
           updatedAt: '2021-08-06T21:59:31.595Z',
-        }
-      ]
+        },
+      ],
     };
 
     const batch2 = {
@@ -54,7 +51,7 @@ describe('batch DAO', () => {
       endDate: '2021-08-13T04:00:00.000Z',
       createdAt: '2021-08-08T04:00:00.000Z',
       updatedAt: '2021-08-08T04:00:00.000Z',
-      users: []
+      users: [],
     };
 
     const batch3 = {
@@ -64,12 +61,12 @@ describe('batch DAO', () => {
       endDate: '2016-08-10T04:00:00.000Z',
       createdAt: '2021-08-08T04:00:00.000Z',
       updatedAt: '2021-08-08T04:00:00.000Z',
-      users: []
+      users: [],
     };
 
     beforeEach(() => {
       jest.spyOn(db.Batch, 'findAll').mockResolvedValueOnce([
-        batch1, batch2, batch3
+        batch1, batch2, batch3,
       ] as unknown as Model<any, any>[]);
     });
 
@@ -80,8 +77,8 @@ describe('batch DAO', () => {
           {
             Name: 'custom:role',
             Value: 'Admin',
-          } 
-        ]
+          },
+        ],
       });
 
       const batchList = await BatchDAO.getBatchesByYear('2021', '');
@@ -95,8 +92,8 @@ describe('batch DAO', () => {
           {
             Name: 'custom:role',
             Value: 'Trainer',
-          } 
-        ]
+          },
+        ],
       });
 
       const batchList = await BatchDAO.getBatchesByYear('2021', '');
@@ -110,8 +107,8 @@ describe('batch DAO', () => {
           {
             Name: 'custom:role',
             Value: 'Admin',
-          } 
-        ]
+          },
+        ],
       });
 
       const batchList = await BatchDAO.getBatchesByYear('2019', '');
