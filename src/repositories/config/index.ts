@@ -36,11 +36,17 @@ const init = (): Sequelize => {
     if (!TESTING) {
       console.log('connected to db');
     }
-  }).catch(console.error);
+  }).catch((err) => {
+    if (!TESTING) {
+      console.error(err);
+    }
+  });
   db.sync({ force: false }).then((syncedDB) => {
     db = syncedDB;
   }).catch((err) => {
-    console.error(err);
+    if (!TESTING) {
+      console.error(err);
+    }
   });
   return db;
 };
