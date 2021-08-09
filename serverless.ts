@@ -59,6 +59,27 @@ const serverlessConfiguration: AWS = {
       external: [
         'aws-sdk',
         'pg',
+        'buffer-writer',
+        'pg-connection-string',
+        'pg-pool',
+        'postgres-bytea',
+        'safe-buffer',
+        'util-deprecate',
+        'inherits',
+        'pg-hstore',
+        'pg-protocol',
+        'postgres-date',
+        'split2',
+        'xtend',
+        'packet-reader',
+        'pg-int8',
+        'pg-types',
+        'postgres-interval',
+        'string_decoder',
+        'pgpass',
+        'postgres-array',
+        'readable-stream',
+        'underscore',
       ],
       watch: {
         pattern: ['src/**/*'],
@@ -93,10 +114,7 @@ const serverlessConfiguration: AWS = {
 
   layers: {
     postgres: {
-      // path: './layer-dir',
-      package: {
-        artifact: './layer-dir/postgres.zip',
-      },
+      path: './layer-dir',
       description: 'PostgreSQL layer',
       compatibleRuntimes: [
         'nodejs14.x',
