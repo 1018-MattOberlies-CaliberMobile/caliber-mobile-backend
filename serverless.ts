@@ -7,10 +7,6 @@ import {
   getNotesByBatchIdAndByWeek,
   getNotesByBatchIdAndWeekOverall,
 } from '@functions/note';
-<<<<<<< HEAD
-=======
-
->>>>>>> f3383ae (refactored backend, and removed useless handlers)
 import {
   getBatchByYear,
   getBatchYears,
