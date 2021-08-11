@@ -29,6 +29,7 @@ const createNoteHandler: ValidatedEventAPIGatewayProxyEvent<typeof schema> = asy
       associateAssociateId: temp.associate.associateId,
     };
   }
+
   let cuNote;
   if (note) {
     cuNote = await Models.Note.update(temp, {
