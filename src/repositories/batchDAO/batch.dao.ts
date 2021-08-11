@@ -22,10 +22,16 @@ class BatchDAO {
     const username = user.Username;
 
     const batches = (await db.Batch.findAll({
-      include: {
-        model: db.User,
-        as: 'users',
-      },
+      include: [
+        {
+          model: db.User,
+          as: 'users',
+        },
+        {
+          model: db.Associate,
+          as: 'associates',
+        },
+      ],
     })).map((response) => JSON.parse(JSON.stringify(response)));
 
     const returnBatches = [];
