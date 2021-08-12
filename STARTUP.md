@@ -79,7 +79,7 @@ Worry about the `DB_USERNAME` and `DB_PASSWORD`, you'll have to set-up the `DB_H
 Install the packages that will be used by the backend:
 
 ```bash
-npm install
+npm install && cd layer-dir && npm install
 ```
 
 ## Deploy
