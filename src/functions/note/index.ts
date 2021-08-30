@@ -19,7 +19,7 @@ export const createNote = {
         path: note,
         cors: true,
         request: {
-          schema: {
+          schemas: {
             'application/json': createNoteSchema,
           },
         },
@@ -40,7 +40,7 @@ export const updateNote = {
         path: note,
         cors: true,
         request: {
-          schema: {
+          schemas: {
             'application/json': createNoteSchema,
           },
         },

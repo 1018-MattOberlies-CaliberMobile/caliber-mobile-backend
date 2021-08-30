@@ -1,25 +1,21 @@
-/* eslint-disable import/no-extraneous-dependencies */
+// eslint-disable-next-line import/no-extraneous-dependencies
 import * as dotenv from 'dotenv';
 import type { AWS } from '@serverless/typescript';
-import ignorePlugin from 'esbuild-plugin-ignore'
-
 import {
   createNote,
   updateNote,
   getNotesByBatchIdAndByWeek,
   getNotesByBatchIdAndWeekOverall,
 } from '@functions/note';
-
 import {
   getBatchByYear,
   getBatchYears,
 } from '@functions/batch';
-
 import {
   getAllUsers,
   getUserById,
 } from '@functions/user';
-
+// eslint-disable-next-line no-unused-vars
 dotenv.config({});
 
 const {
@@ -52,32 +48,53 @@ const serverlessConfiguration: AWS = {
   package: {
     individually: true,
   },
-
+  useDotenv: true,
   custom: {
-    esbuild: {
-      bundle: true,
-      minify: true,
-      sourcemap: true,
-      external: [
-        'aws-sdk',
-        // 'pg',
-        // 'pg-types',
-        // 'postgres-array',
-        // 'postgres-date',
-      ],
-      watch: {
-        pattern: ['src/**/*'],
-        ignore: ['.serverless/**/*', '.build', 'node_modules', '.esbuild'],
+    webpack: {
+      webpackConfig: './webpack.config.js',
+      includeModules: {
+        forceExclude: [
+          'aws-sdk',
+        ],
       },
-      plugins: [ ignorePlugin([
-        {
-          resourceRegExp: /pg-native$/,
-        }
-      ])]
-    
+    },
+    // esbuild: {
+    //   bundle: true,
+    //   minify: true,
+    //   sourcemap: true,
+    //   external: [
+    //     'aws-sdk',
+    //     'pg',
+    //     'buffer-writer',
+    //     'pg-connection-string',
+    //     'pg-pool',
+    //     'postgres-bytea',
+    //     'safe-buffer',
+    //     'util-deprecate',
+    //     'inherits',
+    //     'pg-hstore',
+    //     'pg-protocol',
+    //     'postgres-date',
+    //     'split2',
+    //     'xtend',
+    //     'packet-reader',
+    //     'pg-int8',
+    //     'pg-types',
+    //     'postgres-interval',
+    //     'string_decoder',
+    //     'pgpass',
+    //     'postgres-array',
+    //     'readable-stream',
+    //     'underscore',
+    //   ],
+    //   watch: {
+    //     pattern: ['src/**/*'],
+    //     ignore: ['.serverless/**/*', '.build', 'node_modules', '.esbuild'],
+    //   },
+
+    // },
   },
-},
-  plugins: ['serverless-esbuild', 'serverless-plugin-resource-tagging','serverless-offline','esbuild-plugin-ignore'],
+  plugins: ['serverless-webpack', 'serverless-plugin-resource-tagging'],
   provider: {
     name: 'aws',
     region: 'us-east-1',

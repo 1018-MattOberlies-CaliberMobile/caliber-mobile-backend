@@ -1,5 +1,5 @@
 {
-  "name": "pg-layer",
+  "name": "pglayer",
   "version": "1.0.0",
   "description": "PostgreSQL layer for the Caliber Mobile lambdas",
   "main": "index.js",
@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "pg": "^8.7.1",
-    "pg-hstore": "^2.3.4"
+    "pg-hstore": "^2.3.4",
+    "postgres-date": "^2.0.1"
   }
 }
