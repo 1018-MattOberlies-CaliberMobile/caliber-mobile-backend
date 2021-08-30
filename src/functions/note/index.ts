@@ -41,10 +41,14 @@ export const updateNote = {
         cors: true,
         request: {
 <<<<<<< HEAD
+<<<<<<< HEAD
           schemas: {
 =======
           schema: {
 >>>>>>> f3383ae (refactored backend, and removed useless handlers)
+=======
+          schemas: {
+>>>>>>> 9ac4892 (Coverted esbuild to webpack)
             'application/json': createNoteSchema,
           },
         },
