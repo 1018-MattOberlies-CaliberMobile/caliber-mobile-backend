@@ -6,12 +6,6 @@ COPY . .
 # In conjunction with the .dockerignore file
 # This will only copy the files that we want
 # And node_modules, build, log, etc will be ignored
-<<<<<<< HEAD
 RUN npm ci
 
 ENTRYPOINT sls deploy
-=======
-RUN npm i -g serverless
-RUN npm ci
-RUN AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY sls deploy
->>>>>>> 2031244 (Installed eslint jest plugin)
