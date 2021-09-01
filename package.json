@@ -5,6 +5,7 @@
     "main": "serverless.ts",
     "scripts": {
         "test": "sh test.sh",
+        "test:cov": "jest --coverage",
         "test:file": "sh testfile.sh",
         "db:create": "ts-node rds-set-up/create.ts",
         "db:drop": "ts-node rds-set-up/drop.ts",
